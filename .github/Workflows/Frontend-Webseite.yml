@@ -2,7 +2,7 @@ name: Frontend-Webseite to Azure Container Registry
 
 on:
   push:
-    branches: ["Frontend-Webseite"]
+    branches: ["main"]
 
 jobs:
   build-and-push:
