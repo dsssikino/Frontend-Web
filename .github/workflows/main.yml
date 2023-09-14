@@ -3,7 +3,7 @@ name: Build and deploy a container to an Azure Web App
 env:
   AZURE_WEBAPP_NAME: dsssikino # Set this to the name of your Azure Web App
   CONTAINER_REGISTRY: containersfallstudie.azurecr.io  # Azure Container Registry loginServer
-  CONTAINER_NAME: frontendWeb  # Name of the container
+  CONTAINER_NAME: frontendweb  # Name of the container
 
 on:
   push:
