@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: containersfallstudie.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_bf46eb0aadeb4b538c162de03b1a91e4 }}/frontendweb:${{ github.sha }}
+        tags: containersfallstudie.azurecr.io/frontendweb:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
