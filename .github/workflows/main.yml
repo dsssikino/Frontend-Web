@@ -1,29 +1,60 @@
-name: Build and Push Docker Image
+name: Deploy container to Azure Functions App
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+env:
+  AZURE_FUNCTIONAPP_NAME: 'your-app-name'   # Set this to your function app name on Azure
+  LOGIN_SERVER: 'containersfallstudie.azurecr.io'  # Set this to the login server for your private container registry
+  REGISTRY: 'ContainersFallstudie'                 # Set this to the proper value for REGISTRY
+  NAMESPACE: 'your-namespace'               # Set this to the proper value for NAMESPACE
+  IMAGE: 'frontendWeb'                       # Set this to the name of your Docker container (frontendWeb in this case)
+  TAG: 'latest'                             # Set this to the desired tag for your container (e.g., 'latest')
 
 jobs:
-  build-and-push:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
-    env:
-      DOCKERFILE_PATH: '.'
-      IMAGE_NAME: 'front-web'
-      AZURE_REGISTRY_NAME: 'ContainersFallstudie'
-
+    environment: dev
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@v3
 
-      - name: Login to Azure Container Registry
-        run: |
-          echo ${{ secrets.AZUREREGISTRYPW }} | docker login containersfallstudie.azurecr.io -u ${{ secrets.AZUREREGISTRYNAME }}
-        
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t ${{ env.IMAGE_NAME }} -f ${{ env.DOCKERFILE_PATH }} .
-          docker tag ${{ env.IMAGE_NAME }} containersfallstudie.azurecr.io/${{ env.IMAGE_NAME }}:latest
-          docker push containersfallstudie.azurecr.io/${{ env.IMAGE_NAME }}:latest
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_RBAC_CREDENTIALS }}
+
+    - name: 'Docker Login'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+
+    - name: 'Compose Customized Docker Image'
+      shell: bash
+      run: |
+        # If your function app project is not located in your repository's root
+        # Please change the path to your directory for docker build
+        docker build . -t ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE }}:${{ env.TAG }}
+        docker push ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE }}:${{ env.TAG }}
+
+    - name: 'Run Azure Functions Container Action'
+      uses: Azure/functions-container-action@v1
+      id: fa
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        image: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE }}:${{ env.TAG }}
+
+    # If you want to display or use the functionapp URL, then uncomment the task below
+    #- name: 'Published functionapp URL'
+    #  run: |
+    #    echo "${{ steps.fa.outputs.app-url }}"
+
+    - name: Azure logout
+      run: |
+        az logout
