@@ -1,0 +1,28 @@
+name: Frontend-Webseite to Azure Container Registry
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        # Check out the code from the repository.
+
+      - name: Login to Azure Container Registry
+        run: |
+          echo ${{ secrets.AZUREREGISTRYPW }} | docker login containersfallstudie.azurecr.io -u ${{ secrets.AZUREREGISTRYNAME }} --password-stdin
+        # Log in to your Azure Container Registry using the provided username and password secrets.
+
+      - name: Build Docker image
+        run: |
+          docker build -t containersfallstudie.azurecr.io/front-web:latest .
+          docker images
+
+      - name: Push Docker image to Azure Container Registry
+        run: |
+          docker push containersfallstudie.azurecr.io/front-web:latest
