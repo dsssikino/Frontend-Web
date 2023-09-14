@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://containersfallstudie.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_3c833ef47cef4522a691d32e3db99844 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_a41f093b42454ae0a5280624e2dff43f }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_a6876ecc7eee4fd29beb5af58b27a385 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_9dcffa62bb2b4b70add961eaf94cca6d }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: containersfallstudie.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_3c833ef47cef4522a691d32e3db99844 }}/frontendweb:${{ github.sha }}
+        tags: containersfallstudie.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_a6876ecc7eee4fd29beb5af58b27a385 }}/frontendweb:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'Dsssi-Kino'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_da64eb9e097e4467bd1efb45841f8213 }}
-        images: 'containersfallstudie.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_3c833ef47cef4522a691d32e3db99844 }}/frontendweb:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_9898342acc724204a85d974c6a3a8874 }}
+        images: 'containersfallstudie.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_a6876ecc7eee4fd29beb5af58b27a385 }}/frontendweb:${{ github.sha }}'
