@@ -1,33 +1,29 @@
-name: Frontend-Webseite to Azure Container Registry
+name: Build and Push Docker Image
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Set Node.js version to 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-        # Set the Node.js version to 16.x for this job.
+    env:
+      DOCKERFILE_PATH: '.'
+      IMAGE_NAME: 'front-web'
+      AZURE_REGISTRY_NAME: 'ContainersFallstudie'
 
-      - name: Checkout code
+    steps:
+      - name: Checkout Repository
         uses: actions/checkout@v2
-        # Check out the code from the repository.
 
       - name: Login to Azure Container Registry
         run: |
-          echo ${{ secrets.AZUREREGISTRYPW }} | docker login containersfallstudie.azurecr.io -u ${{ secrets.AZUREREGISTRYNAME }} --password-stdin
-
-      - name: Build Docker image
+          echo ${{ secrets.AZUREREGISTRYPW }} | docker login containersfallstudie.azurecr.io -u ${{ secrets.AZUREREGISTRYNAME }}
+        
+      - name: Build and Push Docker Image
         run: |
-          docker build -t containersfallstudie.azurecr.io/front-web:latest .
-          docker images
-
-      - name: Push Docker image to Azure Container Registry
-        run: |
-          docker push containersfallstudie.azurecr.io/front-web:latest
+          docker build -t ${{ env.IMAGE_NAME }} -f ${{ env.DOCKERFILE_PATH }} .
+          docker tag ${{ env.IMAGE_NAME }} containersfallstudie.azurecr.io/${{ env.IMAGE_NAME }}:latest
+          docker push containersfallstudie.azurecr.io/${{ env.IMAGE_NAME }}:latest
