@@ -1,7 +1,7 @@
 name: Build and deploy a container to an Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: dsssikino
+  AZURE_WEBAPP_NAME: Dsssi-Kino
   CONTAINER_REGISTRY: containersfallstudie.azurecr.io
   CONTAINER_NAME: frontendweb  # Change to lowercase
 
