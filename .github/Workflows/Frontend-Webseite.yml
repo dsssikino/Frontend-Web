@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t containersfallstudie.azurecr.io/your-image-name:latest .
+          docker build -t containersfallstudie.azurecr.io/front-web:latest .
           docker images
         wormy github pipeline does not work it is not even being executed on  push
         name: Frontend-Webseite to Azure Container Registry
@@ -46,14 +46,14 @@ jobs:
         
               - name: Build Docker image
                 run: |
-                  docker build -t containersfallstudie.azurecr.io/webseite:latest .
+                  docker build -t containersfallstudie.azurecr.io/front-web:latest .
                   docker images
                 working-directory: ./  # Dockerfile is at the root of the repository
                 # Build the Docker image, tagging it with the full path to your Azure Container Registry.
         
               - name: Push Docker image to Azure Container Registry
                 run: |
-                  docker push containersfallstudie.azurecr.io/webseite:latest
+                  docker push containersfallstudie.azurecr.io/front-web:latest
                 # Push the Docker image to your Azure Container Registry.
-          docker push containersfallstudie.azurecr.io/your-image-name:latest
+          docker push containersfallstudie.azurecr.io/front-web:latest
         # Push the Docker image to your Azure Container Registry.
