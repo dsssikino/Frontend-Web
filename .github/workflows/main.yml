@@ -1,60 +1,62 @@
-name: Deploy container to Azure Functions App
+name: Build and deploy a container to an Azure Web App
+
+env:
+  AZURE_WEBAPP_NAME: dsssikino # Set this to the name of your Azure Web App
+  CONTAINER_REGISTRY: containersfallstudie.azurecr.io  # Azure Container Registry loginServer
+  CONTAINER_NAME: frontendWeb  # Name of the container
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
-env:
-  AZURE_FUNCTIONAPP_NAME: 'your-app-name'   # Set this to your function app name on Azure
-  LOGIN_SERVER: 'containersfallstudie.azurecr.io'  # Set this to the login server for your private container registry
-  REGISTRY: 'ContainersFallstudie'                 # Set this to the proper value for REGISTRY
-  NAMESPACE: 'your-namespace'               # Set this to the proper value for NAMESPACE
-  IMAGE: 'frontendWeb'                       # Set this to the name of your Docker container (frontendWeb in this case)
-  TAG: 'latest'                             # Set this to the desired tag for your container (e.g., 'latest')
-
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    environment: dev
+
     steps:
-    - name: 'Checkout GitHub Action'
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: 'Login via Azure CLI'
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_RBAC_CREDENTIALS }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226 # v3.0.0
 
-    - name: 'Docker Login'
-      uses: azure/docker-login@v1
-      with:
-        login-server: ${{ env.LOGIN_SERVER }}
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Log in to GitHub container registry
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
 
-    - name: 'Compose Customized Docker Image'
-      shell: bash
-      run: |
-        # If your function app project is not located in your repository's root
-        # Please change the path to your directory for docker build
-        docker build . -t ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE }}:${{ env.TAG }}
-        docker push ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE }}:${{ env.TAG }}
+      - name: Lowercase the repo name and username
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-    - name: 'Run Azure Functions Container Action'
-      uses: Azure/functions-container-action@v1
-      id: fa
-      with:
-        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        image: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ env.IMAGE }}:${{ env.TAG }}
+      - name: Build and push container image to registry
+        uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
+        with:
+          push: true
+          tags: ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+          file: ./Dockerfile
 
-    # If you want to display or use the functionapp URL, then uncomment the task below
-    #- name: 'Published functionapp URL'
-    #  run: |
-    #    echo "${{ steps.fa.outputs.app-url }}"
+  deploy:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    - name: Azure logout
-      run: |
-        az logout
+    steps:
+      - name: Lowercase the repo name and username
+        run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: '${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}'
