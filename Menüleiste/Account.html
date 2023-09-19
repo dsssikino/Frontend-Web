@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="../style.css" rel="stylesheet" />
+    <script src="AccountSkript.js"></script>
+
 </head>
 <body>
     <img
@@ -22,5 +24,21 @@
       <a class="menu-link" href="Kontakt.html">Kontakt</a>
     </div>
 
+  <div class="container2">
+    <h2>Anmeldung / Registrierung</h2>
+    <form id="loginForm">
+      <input class="inputFeld" type="text" id="username" placeholder="Benutzername" required></br>
+      <input class="inputFeld" type="password" id="password" placeholder="Passwort" required></br>
+      <button class="Anmeldung" type="submit">Anmelden</button>
+    </form>
+    <p>Noch kein Konto? <a href="#" id="registerLink">Registrieren</a></p>
+    <form id="registerForm" style="display: none;">
+      <input type="text" id="newUsername" placeholder="Neuer Benutzername" required>
+      <input type="password" id="newPassword" placeholder="Neues Passwort" required>
+      <button type="submit">Registrieren</button>
+    </form>
+  </div>
+
+</div>
 </body>
 </html>

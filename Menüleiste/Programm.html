@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link href="../style.css" rel="stylesheet" />
+    <script src="Programmskript.js"></script>
   </head>
   <body>
     <img
@@ -24,7 +25,62 @@
 
     <div class="header-programm">
       <h1 align="center"> Programm </h1>
-
     </div>
+    <table class="Filtertable" >
+      <tr class="Seitenabstand">
+        <th class="Spalte"> </th>
+        <th class="Spalte2"> <div id="filter-container">
+          <div class="umrandung">
+          <label for="genre">Genre:</label>
+          <select id="genre">
+            <option value="all">Alle</option>
+            <option value="drama">Drama</option>
+            <option value="komödie">Komödie</option>
+            <option value="kinderfilm">Kinderfilm</option>
+          </select>
+
+        </div>
+      </th>
+        <th class="Spalte2">
+          <div class="umrandung2">
+          <label for="fsk">FSK:</label>
+          <input type="checkbox" id="fsk0" name="fsk0" value="0"> <label for="fsk0"> 0</label>
+          <input type="checkbox" id="fsk6" name="fsk6" value="6"> <label for="fsk6"> 6</label>
+          <input type="checkbox" id="fsk12" name="fsk12" value="12"> <label for="fsk12"> 12</label>
+          <input type="checkbox" id="fsk16" name="fsk16" value="16"> <label for="fsk16"> 16</label>
+          <input type="checkbox" id="fsk18" name="fsk18" value="18"> <label for="fsk18"> 18</label>
+        </div>
+        </th>
+        <th class="Spalte2">
+          <div class="umrandung">
+          <form>
+            <input type="text" id="searchInput" placeholder="...">
+            <button type="submit">Suchen</button>
+          </form>
+        </div>
+        </th>
+        <th class="Spalte"></th>
+      </tr>
+    </table>
+  <div>
+    <table>
+      <tr>
+        <td class="Abstand3"></td>
+        <td class="Abstand4"><img src="../img/Kinosaal.jpeg" alt="Filmposter" class="poster"></td>
+        <td class="Abstand4">
+          <h2 class="title">Filmtitel</h2>
+          <small><span class="genre"> Genre</span>, <span class="fsk">FSK</span>, <span>Filmlänge</span></small>
+          <div>
+            <button class="vorstellung">16:30 </button> 
+            <!-- Pop up Fenster -->
+          </div>
+
+        </td>
+        <td class="Abstand3"></td>
+      </tr>
+    </table>
+  </div>
+
+
   </body>
 </html>

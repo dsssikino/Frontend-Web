@@ -54,3 +54,101 @@ body {
 .Vorstellungsauswahl:hover {
     background-color: rgb(190, 188, 188);
 }
+.Filtertable {
+    margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      border-collapse: collapse;
+}
+.Spalte {
+    padding: 10px;
+      text-align: center;
+    width: 10%;
+}
+.Spalte2 {
+    padding: 10px;
+      text-align: center;
+    width: 25%;
+}
+.form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input[type="text"][type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .vorstellung {
+    margin-left: 5px;
+    padding: 5px 10px;
+    background-color: #d8823c;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .umrandung {
+    border: 2px solid #ccc;
+  padding: 10px;
+  width: 200;
+  border-radius: 5px;
+  }
+  .umrandung2 {
+    border: 2px solid #ccc;
+  padding: 10px;
+  width: 300;
+  border-radius: 5px;
+  }
+  .Abstand3 {
+    width: 20%;
+  }
+  .Abstand4 {
+    width: 30%;
+    align-items: center;
+  }
+  .container2 {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .Anmeldung {
+    padding: 5px 10px;
+    background-color: #ed9931;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .p {
+    text-align: center;
+  }
+  
+  #registerForm {
+    display: none;
+  }
+  .inputFeld {
+    width: 300px;
+  }
