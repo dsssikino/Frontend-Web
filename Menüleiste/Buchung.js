@@ -54,11 +54,12 @@ function buchen(){
 }
 
 /* Checkbox Überprüfung  */
+var selectedKategorie = [];
 function getSelectedCheckboxes() {
     var selectedList = document.getElementById("selectedList");
     selectedList.innerHTML = "";
   
-    var selectedKategorie = [];
+    
     var checkboxes = document.querySelectorAll("input[type='checkbox']");
     for (var i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].checked) {
@@ -67,3 +68,7 @@ function getSelectedCheckboxes() {
     }
   }
   
+ /* Navigation Buchung 3 */
+ function redirectToBuchung3() {
+    window.location.href = "Buchung3.html";
+  } 

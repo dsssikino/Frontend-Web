@@ -23,5 +23,91 @@
       <a class="menu-link" href="Account.html">Account</a>
       <a class="menu-link" href="Kontakt.html">Kontakt</a>
     </div>
+
+    <table>
+      <tr>
+        <td class="Abstand"></td>
+        <td class="Abstand" ></td>
+            <td>
+          <img src="../img/filmplakat.jpeg"/>
+          </td>
+        <td class="Abstand">
+          <div class="Filmtitel">Barbie</div> <br/>
+          <small><span class="genre"> Genre</span>, <span class="fsk">FSK</span>, <span>Filmlänge</span></small>
+          
+        </td>
+        <td class="Abstand"></td>
+      </tr>
+    </table>
+
+    <div id="gewählteTickets">
+         --ToDo: Automatische Zusammenfassung der Tickets
+    </div>
+    <div align="center">
+     <h3>Als Gast bestellen:</h3>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td class="Abstand"></td>
+          <td class="Abstand5">
+            <table class="zentrierung">
+              <tr>
+                <td>
+                  <label for="vorname">Vorname:</label>
+                  <input class="rightalign" type="text" id="vorname" name="vorname">
+                </td>
+                <td>
+                  <label for="nachname">Nachname:</label>
+                  <input class="rightalign" type="text" id="nachname" name="nachname">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="straße">Straße:</label>
+                  <input class="rightalign" type="text" id="straße" name="straße">
+                </td>
+                <td>
+                  <label for="hausnummer">Hausnummer:</label>
+                  <input class="rightalign"type="text" id="hausnummer" name="hausnummer">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="postleitzahl">Postleitzahl:</label>
+                  <input class="rightalign" type="text" id="postleitzahl" name="postleitzahl">
+                </td>
+                <td>
+                  <label for="ort">Ort:</label>
+                  <input class="rightalign" type="text" id="ort" name="ort">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="email">E-Mail:</label>
+                  <input class="rightalign" type="text" id="email" name="email">
+                </td>
+                <td>
+                  <label for="geburtsdatum">Geburtsdatum:</label>
+                  <input class="rightalign" type="text" id="geburtsdatum" name="geburtsdatum">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Zahlungsart:
+                  <input type="checkbox" id="rechnung"> <label for="rechnung"> Rechnung</label>
+                  <input type="checkbox" id="paypal"> <label for="paypal"> PayPal</label>
+                  <input type="checkbox" id="vorOrt"> <label for="vorOrt"> vor Ort</label>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td class="Abstand"></td>
+        </tr>
+      </table>
+      <div class="button-container">
+        <button  class="Vorstellungsbutton" onclick="redirectToBuchung3()"> kostenpflichtig Bestellen</button>
+      </div>
+    </div>
 </body>
 </html>

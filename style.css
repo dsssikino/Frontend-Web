@@ -120,6 +120,9 @@ body {
     align-items: left;
     vertical-align: top;
   }
+  .Abstand{
+    width: 25%;
+  }
   .container2 {
     max-width: 400px;
     margin: 0 auto;
@@ -271,4 +274,11 @@ body {
 .Boxanordnung {
   display: flex;
   justify-content: center;
+}
+.zentrierung {
+  justify-items: center;
+}
+.rightalign {
+  justify-items: right;
+  align-content: center;
 }
