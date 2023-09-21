@@ -28,5 +28,14 @@ document.getElementById('fsk').addEventListener('change', function() {
       }
     }
   });  
-  /* Pop up Fenster*/
+  /* Button auslesen*/
+  function getButtonText(){
+    
+    window.location.href = "Buchung.html";
+  }
+  function navigateBuchung (){
+   
+    var button = document.getElementById("BuchungButton").textContent;
+    Buchung.html.getElementById("Vorstellungszeit")= buttonText; 
+  }
   

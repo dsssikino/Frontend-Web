@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buchung</title>
+    <link href="../style.css" rel="stylesheet" />
+    <script src="Programmskript.js"></script>
+    <script src="Buchung.js"></script>
+
+</head>
+<body>
+    <img
+      src="../img/Vista Logos/logo-png.png"
+      class="logo"
+      width="480"
+      height="189"
+    />
+    <div class="container">
+      <a class="menu-link" href="../index.html">Home</a>
+      <a class="menu-link" href="Programm.html">Programm</a>
+      <a class="menu-link" href="Angebote.html">Angebote</a>
+      <a class="menu-link" href="warenkorb.html">Warenkorb</a>
+      <a class="menu-link" href="Account.html">Account</a>
+      <a class="menu-link" href="Kontakt.html">Kontakt</a>
+    </div>
+
+    
+
+
+<h1 align="center" class="welcome">Buchung Saal 2: <span> Barbie-</span > <span id="Vorstellungszeit"></span></h1>
+
+<div class="Boxanordnung">
+    <div class="box box1">ausgewählt</div>
+    <div class="box box2">frei</div>
+</div>
+<div class="button-container">
+  <!-- Erste Reihe -->
+  <button class='leinwand' id='leinwand' >LEINWAND</button>
+  <!-- Zweite Reihe -->
+</div>
+
+<div class="table-spacing"></div>
+<div class="button-container">
+  <!-- Erste Reihe -->
+  <button class='custom-button' id='21' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='22' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='23' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='24' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='25' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='26' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='27' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='28' onclick='toggleSelection(this)'></button>
+  <!-- Zweite Reihe -->
+</div>
+<div class="button-container">
+  <button class='custom-button' id='29' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='210' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='211' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='212' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='213' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='214' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='215' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='216' onclick='toggleSelection(this)'></button>
+</div>
+<div class="button-container">
+  <button class='custom-button' id='217' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='218' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='219' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='220' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='221' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='222' onclick='toggleSelection(this)'></button>
+
+</div>
+<div class="button-container">
+  <button class='custom-button' id='223' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='224' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='225' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='226' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='227' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='228' onclick='toggleSelection(this)'></button>
+</div>
+<div class="button-container">
+  <button class='custom-button' id='229' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='230' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='231' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='232' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='233' onclick='toggleSelection(this)'></button>
+
+</div>
+<div class="button-container">
+  <button class='custom-button' id='234' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='235' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='236' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='237' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='238' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='239' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='240' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='241' onclick='toggleSelection(this)'></button>
+</div>
+
+<div class="table-spacing"></div>
+<div align="center">
+    Wähle deine Ticketkategorie pro Sitz:
+</div>
+<table>
+    <tr>
+      <td class="Abstand4"></td>
+      <td class="Abstand5"><ul id="selectedList"></ul></td>
+      <td class="Abstand5">
+        <button class="Vorstellungsbutton" align="center" onclick="buchen()">Buchen</button>
+      </td>
+      <td class="Abstand3"></td>
+    </tr>
+  </table>
+
+
+<div class="table-spacing"></div>
+
+
+</body>
+</html>
