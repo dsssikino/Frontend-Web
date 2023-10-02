@@ -11,4 +11,5 @@ COPY . /usr/share/nginx/html
 EXPOSE 80
 
 # Start Nginx when the container launchess+
+CMD ["npm install axios"]
 CMD ["nginx", "-g", "daemon off;"]
