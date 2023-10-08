@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link href="../style.css" rel="stylesheet" />
+    <link href="test.css" rel="stylesheet" />
+
     <script src="Programmskript.js"></script>
   </head>
   <body>
@@ -62,74 +64,87 @@
         <th class="Spalte"></th>
       </tr>
     </table>
-  <div>
-    <table>
-      <tr>
-        <td class="Abstand3"></td>
-        <td class="Abstand4"><img src="../img/filmplakat.jpeg" alt="Filmposter" class="poster"></td>
-        <td class="Abstand5">
-          <table>
-            <tr class="Info-Anzeige">
-          <div class="Filmtitel">Barbie</div>
-          <small><span class="genre"> Genre</span>, <span class="fsk">FSK</span>, <span>Filmlänge</span></small>
-        </tr>
-        <tr class="Vorstellungen-Anzeige">
-          <div>
+    <div class="movie_card" id="bright">
+      <div class="info_section">
+          <div >
+              <table class="programmzusammenfassung">
+                <tr>
+                  <td class="Abstand3"></td>
+                  <td class="Abstand4 plakate-box"><img onclick="filmdetails()" src="../img/filmplakat.jpeg" alt="Filmposter" class="poster"></td>
+                  <td class="Abstand5">
+                    <table>
+                      <tr class="Info-Anzeige">
+                    <div class="Filmtitel">Barbie</div>
+                    <small><span class="genre"> Genre</span>, <span class="fsk">FSK</span>, <span>Filmlänge</span></small>
+                  </tr>
+                  <tr class="Vorstellungen-Anzeige">
+                    <div>
+          
+                      <table>
+                        <tr>
+                          <th>Montag</th>
+                          <th>Dienstag</th>
+                          <th>Mittwoch</th>
+                          <th>Donnerstag</th>
+                          <th>Freitag</th>
+                          <th>Samstag</th>
+                          <th>Sonntag</th>
+                        </tr>
+                        <tr>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button> </td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button>  </td>
+                          <td></td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton">16:30 </button> </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button> </td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
+                          <td></td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
+                        </tr>
+                        <tr>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
+                          <td></td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
+                          <td></td>
+                          <td></td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
+                        </tr>
+                        <tr>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                          <td></td>
+                          <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </tr>
+                  </table>
+                  </td>
+                  <td class="Abstand3"></td>
+                </tr>
+              </table>
+            </div>
+        </div>
+    <div class="blur_back bright_back"></div>
+  </div>
 
-            <table>
-              <tr>
-                <th>Montag</th>
-                <th>Dienstag</th>
-                <th>Mittwoch</th>
-                <th>Donnerstag</th>
-                <th>Freitag</th>
-                <th>Samstag</th>
-                <th>Sonntag</th>
-              </tr>
-              <tr>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button> </td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button>  </td>
-                <td></td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton">16:30 </button> </td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button> </td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
-                <td></td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
-              </tr>
-              <tr>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
-                <td></td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
-                <td></td>
-                <td></td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
-              </tr>
-              <tr>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
-                <td></td>
-                <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
-              </tr>
-            </table>
-          </div>
-        </tr>
-        </table>
-        </td>
-        <td class="Abstand3"></td>
-      </tr>
-    </table>
+
+  <div>
+    <script> 
+    window.onload = updateInputValues;
+    </script>
+    <div id="inputFields"></div>
   </div>
   </body>
 </html>

@@ -1,0 +1,405 @@
+body {
+  margin: 0;
+  background-color: #D3D3D3;
+}
+
+.container {
+  position: absolute;
+  right: 50px;
+  top: 16px;
+  font-size: 24px;
+  color: black;
+}
+
+.menu-link {
+  background-color: none;
+  color: black;
+  border-width: 1px;
+  border-radius: 3px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.3s;
+}
+
+.menu-link:hover{
+  background-color:orange;
+  color: black;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 3px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.3s;
+}
+
+.menu-link:active{
+  background-color:darkorange;
+  color: black;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 3px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.3s;
+}
+
+.logo {
+  max-width: 13%;
+  height: auto;
+  position: left;
+  left: 32px;
+  top: 16px;
+}
+
+.headerBild {
+  margin-top: 5px;
+  height: 80vh;
+  width: 100%;
+  position: top;
+  -o-object-fit: 85%;
+     object-fit: 85%;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1));
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1));
+}
+
+.plakate-box:hover {
+  transition-timing-function: ease-in;
+  border-color: black;
+  border-radius: 40px;
+  background: #e0e0e0;
+  box-shadow:  6px 6px 15px #d7d7d7,
+             -6px -6px 15px #e9e9e9;
+}
+
+.text-buchen {
+  text-align: center;
+}
+
+.Filmanzeige-Tabelle {
+  width: 100%;
+}
+
+.spaltenformat {
+  width: 10%;
+  align-items: right;
+}
+
+.Vorstellungsauswahl {
+  background-color: white;
+  border-color: rgb(65, 64, 64);
+  border: 1px;
+  border-radius: 3px;
+}
+
+.Vorstellungsauswahl:hover {
+  background-color: rgb(190, 188, 188);
+}
+
+.Filtertable {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 40px;
+}
+
+.Spalte {
+  padding: 10px;
+  text-align: center;
+  width: 10%;
+}
+
+.Spalte2 {
+  padding: 10px;
+  text-align: center;
+  width: 25%;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+}
+
+.input[type="text"][type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.vorstellung {
+  margin-left: 5px;
+  padding: 5px 10px;
+  background-color: #d8823c;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.umrandung {
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 200;
+  border-radius: 5px;
+}
+
+.umrandung2 {
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 300;
+  border-radius: 5px;
+}
+
+.Abstand3 {
+  width: 15%;
+}
+
+.Abstand4 {
+  width: 20%;
+  align-items: left;
+  vertical-align: top;
+}
+
+.Abstand5 {
+  width: 50%;
+  align-items: left;
+  vertical-align: top;
+}
+
+.Abstand6 {
+  width: 35%;
+  align-items: left;
+  vertical-align: top;
+}
+
+.Abstand{
+  width: 25%;
+}
+
+.container2 {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+  input[type="password"] {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.Anmeldung {
+  padding: 5px 10px;
+  background-color: #ed9931;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.p {
+  text-align: center;
+}
+
+#registerForm {
+  display: none;
+}
+
+.inputFeld {
+  width: 300px;
+}
+
+/* CSS code Programm Tabelle*/
+
+.Programm-Rand {
+  width: 15%;
+}
+
+.Programm-Mitte {
+  width: 70%;
+}
+
+.Filmtitel {
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.Info-Anzeige {
+  height: 40%;
+}
+
+.Vorstellungen-Anzeige {
+  height: 60%;
+}
+
+/*BUtton Design der Vorstellungen*/
+
+.Vorstellungsbutton {
+  background-color: white;
+  color: black;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 3px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.3s;
+}
+
+.button-zurück {
+  background-color: white;
+  color: black;
+  border-width: 1px;
+  border-color: black;
+  border-radius: 3px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.3s;
+}
+
+.Vorstellungsbutton:hover {
+  background-color: orange;
+  color: white;
+  border: 2px;
+  border-radius: 3px;
+}
+
+.button-zurück:hover {
+  background-color: rgb(128, 128, 128);
+  color: white;
+  border: 2px;
+  border-radius: 3px;
+}
+
+.Vorstellungsbutton:active {
+  background-color: darkorange;
+  color: white;
+  border: 2px;
+  border-radius: 3px;
+}
+
+/*Saal 2 design */
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Stil für die Buttons */
+
+.custom-button {
+  width: 1.2cm;
+  height: 1.2cm;
+  background-color: white;
+  color: white;
+  border: 2px solid black;
+  cursor: pointer;
+  margin: 0.1cm;
+  /* Abstand zwischen den Buttons */
+  outline: none;
+  /* Entfernen des Standard-Fokus-Rahmens */
+}
+
+.custom-button:hover {
+  background-color: rgb(157, 157, 157);
+}
+
+/* Stil für die ausgewählten Buttons */
+
+.custom-button.selected {
+  background-color: #e74c3c;
+}
+
+.leinwand {
+  width: 12cm;
+  height: 1cm;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 0.1cm;
+  /* Abstand zwischen den Buttons */
+  outline: none;
+  /* Entfernen des Standard-Fokus-Rahmens */
+  font-size: large;
+  letter-spacing: 5px
+}
+
+/* Box Design */
+
+.box {
+  width: 100px;
+  height: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.box1 {
+  background-color: #e74c3c;
+}
+
+.box2 {
+  background-color: rgb(157, 157, 157);
+}
+
+.Boxanordnung {
+  display: flex;
+  justify-content: center;
+}
+
+.zentrierung {
+  justify-items: center;
+}
+
+.rightalign {
+  justify-items: right;
+  align-content: center;
+}
+
+/* Slider Homeseite*/
+
+.slider {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.slider img {
+  width: 100%;
+  height: auto;
+  display: none;
+}
+
+.slider img.active {
+  display: block;
+}
