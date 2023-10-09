@@ -10,17 +10,17 @@ const baseUrl = 'https://dsssi-backend-booking.greenplant-9a54dc56.germanywestce
   button.addEventListener("click", redirectToBuchung3);
 
  function redirectToBuchung3() {
-  
-    myBooking =createBooking(); // Create a new booking
+     // Create a new booking
   // Call the /hello endpoint
   // cancelBooking(1); // Cancel a booking with the specified ID
-    payBooking(24);
+    createBooking(); // Create a new booking
+    payBooking(25);
     window.location.href = "Buchung3.html";
  // Pay for a booking with the specified ID
 // validateBooking(1); // Validate a booking with the specified ID
 
   } 
-
+ 
   // Function to create a booking
 async function createBooking() {
   try {
@@ -31,7 +31,7 @@ async function createBooking() {
       amount: 100, // Replace with your booking data
     });
 
-    console.log('Booking created:', response.data);
+    console.log('Booking created:', response.data["id"]);
   } catch (error) {
     console.error('Error creating booking:', error.response.data);
   }
@@ -43,7 +43,6 @@ async function sayHello() {
     const response = await axios.get(`${baseUrl}/hello`);
 
     console.log('Hello from server:', response.data);
-    return response.data; // Fixed typo here
   } catch (error) {
     console.error('Error calling /hello endpoint:', error.response.data);
   }
@@ -92,5 +91,3 @@ async function validateBooking(bookingId) {
     console.error('Error validating booking:', error.response.data);
   }
 }
-
-// Buchungscode von Ian 
