@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Fetch Beispiel</title>
+</head>
+<body>
+    
+    <!-- Suchformular -->
+	<form id="searchForm">
+	    <label for="produktName">API:</label>
+	    <button type="button" id="submitButton">Testen</button>
+	</form>
+	
+	<!-- Ergebnisse anzeigen -->
+	<div id="results"></div>
+	
+	<script>
+	    document.getElementById('submitButton').addEventListener('click', function () {
+	        // Hier können Sie den API-Aufruf durchführen, wenn der Button geklickt wird
+	        fetch('')
+	            .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
+	            .then(data => {
+	                // Hier können Sie die Ergebnisse in Ihrer HTML-Oberfläche anzeigen
+	                const resultsDiv = document.getElementById('results');
+	                resultsDiv.innerHTML = data; // Zeigen Sie den API-Text in #results an
+	                console.log(data); // Gib den API-Text in der Konsole aus
+	            })
+	            .catch(error => console.error('Fehler bei der API-Anfrage:', error));
+	    });
+	</script>
+    <script>
+
+
+       async function testfetchData() {
+            // URL der API, von der Daten abgerufen werden sollen
+            const apiUrl = 'http://dsssi-backend-lookup--wvnck6n.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io';
+
+            // Fetch-Abfrage an die API senden
+            fetch(apiUrl, { mode: 'no-cors'})
+            .then(response => response.json()) // Die Antwort in JSON umwandeln
+                .then(data => {
+                    // Hier können Sie die Daten verarbeiten und anzeigen
+                    const outputElement = document.getElementById('output');
+                    outputElement.innerHTML = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+       
+    </script>
+</body>
+</html>

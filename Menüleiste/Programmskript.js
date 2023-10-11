@@ -121,3 +121,15 @@ document.getElementById('fsk').addEventListener('change', function() {
     window.location.href = "Programm2.html";
 
   }
+
+  const apiUrl = 'https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/testAPI';
+
+fetchData(apiUrl)
+  .then(data => {
+    // Hier kannst du die Daten der API-Antwort verwenden
+    console.log(data);
+  })
+  .catch(error => {
+    // Hier kannst du den Fehler behandeln
+    console.error(error);
+  });
