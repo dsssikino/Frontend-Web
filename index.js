@@ -1,6 +1,10 @@
 var slideIndex = 0;
 showSlides();
 
+function seitenwechsel(){
+    window.location.href = "apiTest.html";
+}
+
 function showSlides() {
     var slides = document.getElementsByClassName("slider")[0].getElementsByTagName("img");
     for (var i = 0; i < slides.length; i++) {
