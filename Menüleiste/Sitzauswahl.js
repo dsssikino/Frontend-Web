@@ -1,14 +1,22 @@
 var selectedButtons = [];
 
 function toggleSelection(button) {
-    var buttonId = button.id;
-    if(checkIfExisting (buttonId) == true) {
-        deleteFromSelectedList(buttonId);
+    var index = selectedButtons.indexOf(button);
+
+    if (index === -1) {
+      // Button ist nicht im Array, füge ihn hinzu
+      addToSelectedList(button);
+      button.classList.add("selected");
+      updateSelectedList();
+      console.log("Button hinzugefügt:", button.textContent);
+    } else {
+      // Button ist bereits im Array, entferne ihn
+      deleteFromSelectedList(index, 1);
+      updateSelectedList();
+      button.classList.remove("selected");
+      console.log("Button entfernt:", button.textContent);
     }
-    else {
-        addToSelectedList(buttonId)
-        button.classList.toggle("selected");
-    }  
+    checkbox();
     }
 
 
@@ -18,19 +26,38 @@ updateSelectedList();
 }
 
 function deleteFromSelectedList (buttonId) {
-    selectedButtons.splice(i,1);
+    selectedButtons.splice(buttonId,1);
     updateSelectedList();
 }
 
-function checkIfExisting (buttonId){
-    for (let i = 0; i < selectedButtons.length; i++) {
-        if (liste[i] === buttonId) { 
-            return true;
-        }
-        else {return false;}        
-      }
+function preisErmitteln(){
+     var gesamtBetrag = 0;
+     getSelectedCheckboxes;
+     
 }
-
+// Funktion zum Ermitteln der ausgewählten Checkboxen
+function getSelectedCheckboxes() {
+    var selectedCheckboxes = [];
+  
+    // Alle Checkboxen im Dokument auswählen
+    var alleCheckboxen = document.querySelectorAll("input[type='checkbox']");
+  
+    // Schleife zum Überprüfen jeder Checkbox
+    for (var i = 0; i < alleCheckboxen.length; i++) {
+      var checkbox = alleCheckboxen[i];
+  
+      // Überprüfe, ob die Checkbox ausgewählt ist
+      if (checkbox.checked) {
+        selectedCheckboxes.push(checkbox);
+      }
+    }
+  
+    return selectedCheckboxes;
+  }
+  
+  // Beispielcode zum Aufrufen der Funktion
+  var ausgewaehlteCheckboxen = getSelectedCheckboxes();
+  console.log(ausgewaehlteCheckboxen);
 function updateSelectedList() {
 var selectedList = document.getElementById("selectedList");
 selectedList.innerHTML = "";
@@ -41,7 +68,7 @@ var listItem = document.createElement("li");
 var checkbox = document.createElement("input");
 checkbox.type = "checkbox";
 listItem.appendChild(document.createTextNode("Sitz: "));
-listItem.appendChild(document.createTextNode(selectedButtons[i]))
+listItem.appendChild(document.createTextNode(selectedButtons[i].id))
 listItem.appendChild(document.createTextNode(" Kategorie: "));
 listItem.appendChild(checkbox);
 checkbox.id = "Erwachsener"+ i;
@@ -62,11 +89,45 @@ selectedList.appendChild(listItem);
 var checkbox2 = document.createElement("input");
 checkbox2.type = "checkbox";
 listItem.appendChild(checkbox2);
-checkbox2.id = "Vergünstigt"+ i;
-listItem.appendChild(document.createTextNode("Vergünstigt"));
+checkbox2.id = "Ermäßigt"+ i;
+listItem.appendChild(document.createTextNode("Ermäßigt"));
 selectedList.appendChild(listItem);
 
+
 }}
+function checkbox (){
+for (var i = 0; i < selectedButtons.length; i++) {
+    // Event Listener hinzufügen
+    var checkErID = "Erwachsener" +i;
+    var checkKiID = "Kind" +i;
+    var checkEmID = "Ermäßigt" +i;
+
+    if (checkErID.checked) {
+        checkKiID.checked = false;
+        checkEmID.selected = false;
+      }
+
+// Event Listener für die Checkboxen hinzufügen
+    if (checkKiID.checked) {
+        checkErID.checked = false;
+        checkEmID.selected = false;
+    }
+  ;
+  
+    if (checkEmID.checked) {
+        checkErID.checked = false;
+        checkKiID.checked = false;
+    }
+  ;
+  }}
+    
+  
+  checkbox3.addEventListener("change", function() {
+    if (checkbox3.checked) {
+      checkbox1.checked = false;
+      checkbox2.checked = false;
+    }
+  });
 /* buchen */
 function buchen(){
 getSelectedCheckboxes();

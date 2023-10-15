@@ -20,7 +20,7 @@
 	<script>
 	    document.getElementById('submitButton').addEventListener('click', function () {
 	        // Hier können Sie den API-Aufruf durchführen, wenn der Button geklickt wird
-	        fetch('http://dsssi-backend-lookup--1zbhirf.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io')
+	        fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
 	            .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
 	            .then(data => {
 	                // Hier können Sie die Ergebnisse in Ihrer HTML-Oberfläche anzeigen
@@ -34,23 +34,6 @@
     <script>
 
 
-       async function testfetchData() {
-            // URL der API, von der Daten abgerufen werden sollen
-            const apiUrl = 'http://dsssi-backend-lookup--wvnck6n.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io';
-
-            // Fetch-Abfrage an die API senden
-            fetch(apiUrl, { mode: 'no-cors'})
-            .then(response => response.json()) // Die Antwort in JSON umwandeln
-                .then(data => {
-                    // Hier können Sie die Daten verarbeiten und anzeigen
-                    const outputElement = document.getElementById('output');
-                    outputElement.innerHTML = JSON.stringify(data, null, 2);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
-       
     </script>
 </body>
 </html>

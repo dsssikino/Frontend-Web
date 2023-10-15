@@ -38,98 +38,139 @@ document.getElementById('fsk').addEventListener('change', function() {
     var button = document.getElementById("BuchungButton").textContent;
     Buchung.html.getElementById("Vorstellungszeit")= buttonText; 
   }
+  var filme = [];
+  var i;
   // Anzeige vom Programm: Samu 
   function updateInputValues() {
 
-    const filmText = "[Film{titel='Inception', genre='Science Fiction', fsk=16, dauer=148, erwachsene=2, ermaßigt=1, kinder=3, kategorie='Blockbuster'}, Film{titel='Interstellar', genre='Science Fiction', fsk=12, dauer=169, erwachsene=3, ermaßigt=2, kinder=2, kategorie='Blockbuster'}, Film{titel='The Shawshank Redemption', genre='Drama', fsk=12, dauer=142, erwachsene=4, ermaßigt=1, kinder=1, kategorie='Klassiker'}]";
-  
-    const filme = filmText.match(/Film{[^}]+}/g);
-  
-  
-    document.getElementById('inputFields').innerHTML = '';
-  
-  
-    for (let i = 0; i < filme.length; i++) {
-      const film = filme[i];
-      const titel = film.match(/titel='([^']+)'/)[1];
-      const genre = film.match(/genre='([^']+)'/)[1];
-      const fsk = film.match(/fsk=(\d+)/)[1];
-      const dauer = film.match(/dauer=(\d+)/)[1];
-      const erwachsene = film.match(/erwachsene=(\d+)/)[1];
-      const ermaßigt = film.match(/ermaßigt=(\d+)/)[1];
-      const kinder = film.match(/kinder=(\d+)/)[1];
-      const kategorie = film.match(/kategorie='([^']+)'/)[1];
+    // Hier können Sie den API-Aufruf durchführen, wenn der Button geklickt wird
+	        fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
+	            .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
+	            .then(data => {
+	                // Hier können Sie die Ergebnisse in Ihrer HTML-Oberfläche anzeigen
+                  console.log(data);
+                  const filmText = data;
+                  const filme = filmText.match(/Film{[^}]+}/g);
+
   
   
-      const inputFields = document.getElementById('inputFields');
-      inputFields.innerHTML += `
-            <div>
-    <div class="film-table">
-      <div class="film-image">
-        <img src="${titel}.jpg" alt="${titel}">
-        <input type="file" accept="image/*" id="bild-upload2">
-  
-      </div>
-      <div class="film-cell">
-        <!-- Reihe mit 3 Boxen -->
-        <div class="info-box">
-          <div class="info-label">Titel:</div>
-          <input type="text" id="titelInput${i + 1}" placeholder="Titel" value="${titel}">
-          <input type="hidden" id="imagePathInput">
-        </div>
-        <div class="info-box">
-          <div class="info-label">Genre:</div>
-          <input type="text" id="genreInput${i + 1}" placeholder="Genre" value="${genre}">
-        </div>
-        <div class="info-box">
-          <div class="info-label">FSK:</div>
-          <input type="text" id="fskInput${i + 1}" placeholder="FSK" value="${fsk}">
-        </div>
-        <div class="info-box">
-          <div class="info-label">Dauer:</div>
-          <input type="text" id="dauerInput${i + 1}" placeholder="Dauer" value="${dauer}">
-        </div>
-  
-      </div>
-      <div class="film-cell">
-        <!-- 4 Boxen in der rechten Spalte -->
-        <div class="info-box">
-          <div class="info-label">Kategorie:</div>
-          <input type="text" id="kategorieInput${i + 1}" placeholder="Kategorie" value="${kategorie}">
-        </div>
-        <div class="info-box">
-          <div class="info-label">Erwachsene:</div>
-          <input type="text" id="erwachseneInput${i + 1}" placeholder="Erwachsene" value="${erwachsene}">
-        </div>
-        <div class="info-box">
-          <div class="info-label">Schüler, Azubi, Student:</div>
-          <input type="text" id="ermaßigtInput${i + 1}" placeholder="Ermaßigt" value="${ermaßigt}">
-        </div>
-        <div class="info-box">
-          <div class="info-label">Kinder:</div>
-          <input type="text" id="kinderInput${i + 1}" placeholder="Kinder" value="${kinder}">
-        </div>
-      </div>
-    </div>
-    <div class="table-spacing"></div>
-  </div>
-          `;
-    }
-  
+                  for (let i = 0; i < filme.length; i++) {
+                    const film = filme[i];
+                    const titel = film.match(/titel='([^']+)'/)[1];
+                    const genre = film.match(/genre='([^']+)'/)[1];
+                    const fsk = film.match(/fsk=(\d+)/)[1];
+                    const dauer = film.match(/dauer=(\d+)/)[1];
+                    //const erwachsene = film.match(/erwachsene=(\d+)/)[1];
+                    //const ermaßigt = film.match(/ermaßigt=(\d+)/)[1];
+                    //const kinder = film.match(/kinder=(\d+)/)[1];
+                    //const kategorie = film.match(/kategorie='([^']+)'/)[1];
+                
+                
+                    const ausgabe = document.getElementById('FilmAusgabe');
+                    ausgabe.innerHTML += `
+                    <div class="movie_card" id="bright">
+                    <div class="info_section">
+                        <div >
+                            <table class="programmzusammenfassung">
+                              <tr>
+                                <td class="Abstand3"></td>
+                                <td class="Abstand4 plakate-box"><img id="${i+1}" onclick="filmdetails(event)" src="../img/filmplakat.jpeg" alt="Filmposter" class="poster"></td>
+                                <td class="Abstand5">
+                                  <table>
+                                    <tr class="Info-Anzeige">
+                                  <div class="Filmtitel" onclick="filmdetails(event)" id="${i+1}">${titel}</div>
+                                  <small><span class="genre">${genre}, FSK: <span class="fsk">${fsk}</span>, ${dauer} min</span></small>
+                                </tr>
+                                <mtr class="Vorstellungen-Anzeige">
+                                  <div>
+                        
+                                    <table>
+                                      <tr>
+                                        <th>Montag</th>
+                                        <th>Dienstag</th>
+                                        <th>Mittwoch</th>
+                                        <th>Donnerstag</th>
+                                        <th>Freitag</th>
+                                        <th>Samstag</th>
+                                        <th>Sonntag</th>
+                                      </tr>
+                                      <tr>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button> </td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button>  </td>
+                                        <td></td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton">16:30 </button> </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                      </tr>
+                                      <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button> </td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
+                                        <td></td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
+                                      </tr>
+                                      <tr>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
+                                        <td></td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
+                                      </tr>
+                                      <tr>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                                        <td></td>
+                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </tr>
+                                </table>
+                                </td>
+                                <td class="Abstand3"></td>
+                              </tr>
+                            </table>
+                          </div>
+                      </div>
+                  <div class="blur_back bright_back"></div>
+                </div>
+               
+                        `;
+                  }
+	            })
+	            .catch(error => console.error('Fehler bei der API-Anfrage:', error));
+    
   }
-  function filmdetails() {
-    window.location.href = "Programm2.html";
+  function filmdetails(event) {
+    var clickedElementId = event.target.id;
+    window.location.href = "Programm2.html?id=" + clickedElementId;
+    
+    var urlParams = new URLSearchParams(window.location.search);
+    var FilmID = urlParams.get('id') - 1;
 
+    const film = filme[FilmID];
+                    const titel = film.match(/titel='([^']+)'/)[1];
+                    const genre = film.match(/genre='([^']+)'/)[1];
+                    const fsk = film.match(/fsk=(\d+)/)[1];
+                    const dauer = film.match(/dauer=(\d+)/)[1];
+                    //const erwachsene = film.match(/erwachsene=(\d+)/)[1];
+                    //const ermaßigt = film.match(/ermaßigt=(\d+)/)[1];
+                    //const kinder = film.match(/kinder=(\d+)/)[1];
+                    //const kategorie = film.match(/kategorie='([^']+)'/)[1];
+
+    console.log(film);
+    const detailsAusgabe = document.getElementById("details");
+    detailsAusgabe.innerHTML += `
+    <div><h1>test</h1></div>
+    `;
   }
 
-  const apiUrl = 'https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/testAPI';
-
-fetchData(apiUrl)
-  .then(data => {
-    // Hier kannst du die Daten der API-Antwort verwenden
-    console.log(data);
-  })
-  .catch(error => {
-    // Hier kannst du den Fehler behandeln
-    console.error(error);
-  });
+ 
