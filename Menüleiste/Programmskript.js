@@ -1,3 +1,34 @@
+// fetch aufrufen und variablen einpflegen 
+function fetchAufruf (){
+  fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
+  .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
+  .then(data => {
+      // Hier können Sie die Ergebnisse in Ihrer HTML-Oberfläche anzeigen
+      console.log(data);
+      const filmText = data;
+      const filme = filmText.match(/Film{[^}]+}/g);
+
+
+
+      for (let i = 0; i < filme.length; i++) {
+        const film = filme[i];
+        const titel = film.match(/titel='([^']+)'/)[1];
+        const genre = film.match(/genre='([^']+)'/)[1];
+        const fsk = film.match(/fsk=(\d+)/)[1];
+        const dauer = film.match(/dauer=(\d+)/)[1];
+        const erwachsene = film.match(/erwachsene=(\d+)/)[1];
+        const ermaßigt = film.match(/ermaessigt=(\d+)/)[1];
+        const kinder = film.match(/kinder=(\d+)/)[1];
+        const kategorie = film.match(/kategorie='([^']+)'/)[1];
+        const trailerURL = film.match(/trailerURL='([^']+)'/)[1];
+      return filme;
+     }
+  })
+  .catch(error => console.error('Fehler bei der API-Anfrage:', error));
+
+
+}
+
 /* Programmfilter, Genre*/
 document.getElementById('genre').addEventListener('change', function() {
     var selectedCategory = this.value;
@@ -29,9 +60,11 @@ document.getElementById('fsk').addEventListener('change', function() {
     }
   });  
   /* Button auslesen*/
-  function getButtonText(){
-    
-    window.location.href = "Buchung.html";
+  function getButtonText(event){
+    var element = event.target;
+    var idFilm = element.id;
+    console.log(idFilm);
+    window.location.href = "Buchung.html?id=" + idFilm;
   }
   function navigateBuchung (){
    
@@ -40,6 +73,7 @@ document.getElementById('fsk').addEventListener('change', function() {
   }
   var filme = [];
   var i;
+  var titel;
   // Anzeige vom Programm: Samu 
   function updateInputValues() {
 
@@ -56,7 +90,7 @@ document.getElementById('fsk').addEventListener('change', function() {
   
                   for (let i = 0; i < filme.length; i++) {
                     const film = filme[i];
-                    const titel = film.match(/titel='([^']+)'/)[1];
+                   titel = film.match(/titel='([^']+)'/)[1];
                     const genre = film.match(/genre='([^']+)'/)[1];
                     const fsk = film.match(/fsk=(\d+)/)[1];
                     const dauer = film.match(/dauer=(\d+)/)[1];
@@ -95,10 +129,10 @@ document.getElementById('fsk').addEventListener('change', function() {
                                         <th>Sonntag</th>
                                       </tr>
                                       <tr>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button> </td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button>  </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >16:30 </button> </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >16:30 </button>  </td>
                                         <td></td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton">16:30 </button> </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton">16:30 </button> </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -107,28 +141,28 @@ document.getElementById('fsk').addEventListener('change', function() {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button> </td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >18:00 </button> </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >18:00 </button></td>
                                         <td></td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >18:00 </button></td>
                                       </tr>
                                       <tr>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >20:30 </button> </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >20:30 </button></td>
                                         <td></td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >20:30 </button></td>
                                         <td></td>
                                         <td></td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >20:30 </button> </td>
                                       </tr>
                                       <tr>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >22:30 </button> </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >22:30 </button> </td>
                                         <td></td>
-                                        <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
+                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >22:30 </button> </td>
                                       </tr>
                                     </table>
                                   </div>
@@ -152,25 +186,7 @@ document.getElementById('fsk').addEventListener('change', function() {
   function filmdetails(event) {
     var clickedElementId = event.target.id;
     window.location.href = "Programm2.html?id=" + clickedElementId;
-    
-    var urlParams = new URLSearchParams(window.location.search);
-    var FilmID = urlParams.get('id') - 1;
-
-    const film = filme[FilmID];
-                    const titel = film.match(/titel='([^']+)'/)[1];
-                    const genre = film.match(/genre='([^']+)'/)[1];
-                    const fsk = film.match(/fsk=(\d+)/)[1];
-                    const dauer = film.match(/dauer=(\d+)/)[1];
-                    //const erwachsene = film.match(/erwachsene=(\d+)/)[1];
-                    //const ermaßigt = film.match(/ermaßigt=(\d+)/)[1];
-                    //const kinder = film.match(/kinder=(\d+)/)[1];
-                    //const kategorie = film.match(/kategorie='([^']+)'/)[1];
-
-    console.log(film);
-    const detailsAusgabe = document.getElementById("details");
-    detailsAusgabe.innerHTML += `
-    <div><h1>test</h1></div>
-    `;
   }
+    
 
  

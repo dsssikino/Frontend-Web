@@ -91,3 +91,4 @@ async function validateBooking(bookingId) {
     console.error('Error validating booking:', error.response.data);
   }
 }
+
