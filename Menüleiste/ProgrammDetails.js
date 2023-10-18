@@ -34,125 +34,67 @@ document.addEventListener("DOMContentLoaded", function() {
          ermaßigt = film.match(/ermaessigt=(\d+)/)[1];
          kinder = film.match(/kinder=(\d+)/)[1];
          kategorie = film.match(/kategorie='([^']+)'/)[1];
-         trailerURL = film.match(/trailerURL='([^']+)'/)[1];
          beschreibung = film.match(/beschreibung='([^']+)'/)[1];
+         trailerURL = film.match(/trailerURL='([^']+)'/)[1];
+         
 
-         
-         
+         ProgrammErstellung();
      }
   )
   .catch(error => console.log('Fehler bei der API-Anfrage:', error));
-  console.log(titel);
   
-      ProgrammErstellung();
-  });
+ 
+  
+  }
+  
+  );
+
+  
 function ProgrammErstellung(){
-    var Titel = document.getElementById("aktuellerTitel");
-        Titel.innerHTML = "titel";
-    var ProgrammDetails = document.getElementById("details");
-    ProgrammDetails.innerHTML +=`
-    <div class="movie-card2">
-  
-    <div class="container5">
-      <div class="plakatProgramm">
-      <a href="#"><img src="/img/filmplakat.jpeg" alt="cover" class="cover" /></a>
-      <iframe class="filmeinbettung" align="right" width="476" height="268" src=trailerURl title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-      </div>   
-      <div class="hero">
-              
-
-        <div class="details" width= 1000px>
-        
-          <div class="title1" id="titel"></div>
-  
-          <div class="title2" id="Daten"></div>    
-          
-          
-        </div> <!-- end details -->
-        
-      </div> <!-- end hero -->
-      
-      <div class="description">
-        
-        <div class="column1">
-          <span class="tag" id="genreFilm></span>
-        </div> <!-- end column1 -->
-        
-        <div class="column2">
-          
-          <p id="BeschreibungFilm"></p>          
-          
-          
-        </div> <!-- end column2 -->
-      </div> <!-- end description -->
-      
-      
+    
+    var div = document.getElementById("output");
+    div.innerHTML +=`
+    <div class="card">
     <table>
-        <tr class="abstand10"></tr>
         <tr>
-            <table>
-                <tr>
-                  <th>Montag</th>
-                  <th>Dienstag</th>
-                  <th>Mittwoch</th>
-                  <th>Donnerstag</th>
-                  <th>Freitag</th>
-                  <th>Samstag</th>
-                  <th>Sonntag</th>
-                </tr>
-                <tr>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button> </td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >16:30 </button>  </td>
-                  <td></td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton">16:30 </button> </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button> </td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
-                  <td></td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >18:00 </button></td>
-                </tr>
-                <tr>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
-                  <td></td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button></td>
-                  <td></td>
-                  <td></td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >20:30 </button> </td>
-                </tr>
-                <tr>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
-                  <td></td>
-                  <td><button onclick="getButtonText()" id="BuchungButton" class="Vorstellungsbutton" >22:30 </button> </td>
-                </tr>
-              </table>
+            <td>
+                <div class="card__img">
+                    <iframe class="card__img" id="ytFrame" width="504" height="284" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </td>
+            <td>
+                <div class="card__avatar"><img class="card__img" src="../img/filmplakat.jpeg"></div>
+            </td>
         </tr>
-        <tr></tr>
     </table>
-          
-    </div> <!-- end container -->
-  </div> <!-- end movie-card -->
-
-    `
+    
+    <div class="card__title" id="titel"></div>
+    <div class="card__subtitle"><span id="Daten"></span></div>
+    <div>
+        <table>
+            <tr>
+                <td class="Beschreibung">
+                 <span class="Beschreibung" id="BeschreibungFilm"></span>    
+                </td>
+                <td class="Vorstellungendetails">
+                    <a class="Vorstellungendetails">Vorstellungen</a> 
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+`;
+   console.log(titel, dauer, fsk, genre, beschreibung);
+    wertZuweisung();
+    ;
+}
+function wertZuweisung () {
     var titelFilm = document.getElementById("titel");
     titelFilm.innerHTML = titel;
     var DatenFilm = document.getElementById("Daten");
-    DatenFilm.innerHTML = dauer + "min,  FSK: "+ fsk ;
-    var genreFilm = document.getElementById("genreFilm");
-    genreFilm.innerHTML = genre;
-    var beschFilm = document.getElementById("BeschreibungFilm");
-    beschFilm.innerHTML = beschreibung;
-    ;
+    DatenFilm.innerHTML = dauer + "min,  FSK: "+ fsk + ", "+ genre ;
+    var beschreibungfilm = document.getElementById("BeschreibungFilm");
+    beschreibungfilm.innerHTML = beschreibung;
+    document.getElementById("ytFrame").src.innerHTML = trailerURL;
+    console.log(beschreibung);
 }
