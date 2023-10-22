@@ -18,18 +18,33 @@
 	<div id="results"></div>
 	
 	<script>
-	    document.getElementById('submitButton').addEventListener('click', function () {
-	        // Hier können Sie den API-Aufruf durchführen, wenn der Button geklickt wird
-	        fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
-	            .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
-	            .then(data => {
-	                // Hier können Sie die Ergebnisse in Ihrer HTML-Oberfläche anzeigen
-	                const resultsDiv = document.getElementById('results');
-	                resultsDiv.innerHTML = data; // Zeigen Sie den API-Text in #results an
-	                console.log(data); // Gib den API-Text in der Konsole aus
-	            })
-	            .catch(error => console.error('Fehler bei der API-Anfrage:', error));
-	    });
+		document.getElementById('submitButton').addEventListener('click', fetchData);
+  
+  
+  function fetchData() {
+    fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/vorstellungAnzeigen')
+      .then(response => response.text())
+      .then(data => {
+		console.log(data);
+      const vorstellungsText = data;
+      const vorstellungen = vorstellungsText.match(/Vorstellung{[^}]+}/g);
+
+	  for (let i = 0; i < vorstellungen.length; i++) {
+		const vorstellung = vorstellungen[i];
+        const filmTitel = vorstellung.match(/filmTitel='([^']+)'/);
+        const zeit = vorstellung.match(/zeit='([^']+)'/);
+        const datum = vorstellung.match(/datum=(\d+)/);
+        const kinosaal = vorstellung.match(/kinosaal=(\d+)/);
+        const sitzplan = vorstellung.match(/sitzplan=(\d+)/);
+		console.log(vorstellung, i);
+      };
+        console.log(vorstellungen);
+      })
+
+      .catch(error => {
+        console.log('Fehler beim Abrufen der Daten:', error);
+      });
+  }	
 	</script>
     <script>
 

@@ -95,15 +95,15 @@ for (var i = 0; i < selectedButtons.length; i++) {
     <th>Sitz <span id="SitzID${i}"></span>:</th>
     <th>
     <label for="erw${i}">Erwachsener</label>
-    <input type="radio" id="erw${i}" name="group${i}" onclick="ratioAuswahlt(this)">
+    <input type="radio" id="erw${i}" name="group${i}" onclick="saveSelectedRatios()">
     </th>
     <th>
     <label for="erm${i}">Ermäßigt</label>
-    <input type="radio" id="erm${i}" name="group${i}" onclick="ratioAuswahlt(this)">
+    <input type="radio" id="erm${i}" name="group${i}" onclick="saveSelectedRatios()">
     </th>
     <th>
     <label for="kind${i}">Kind</label>
-    <input type="radio" id="Kind${i}" name="group${i}" onclick="ratioAuswahlt(this)">
+    <input type="radio" id="Kind${i}" name="group${i}" onclick="saveSelectedRatios()">
     </th>
     <th><span id="ticketPreis${i}"></span></th>
   </tr>
@@ -133,6 +133,12 @@ var gesamtSumme;
         preis.innerHTML = kinder;
     
 }*/
+
+function saveSelectedRatios() {
+  var ratioInputs = document.querySelectorAll('input[type="radio"]');
+
+  console.log(ratioInputs);
+}
 
 function getSelectedItems() {
     var list = document.getElementById("list");

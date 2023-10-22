@@ -1,5 +1,6 @@
+var titel;
 // fetch aufrufen und variablen einpflegen 
-function fetchAufruf (){
+/*function fetchAufruf (){
   fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
   .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
   .then(data => {
@@ -12,7 +13,8 @@ function fetchAufruf (){
 
       for (let i = 0; i < filme.length; i++) {
         const film = filme[i];
-        const titel = film.match(/titel='([^']+)'/)[1];
+        titel = film.match(/filmTitel='([^']+)'/)[1];
+        console.log(titel);
         const genre = film.match(/genre='([^']+)'/)[1];
         const fsk = film.match(/fsk=(\d+)/)[1];
         const dauer = film.match(/dauer=(\d+)/)[1];
@@ -22,12 +24,75 @@ function fetchAufruf (){
         const kategorie = film.match(/kategorie='([^']+)'/)[1];
         const trailerURL = film.match(/trailerURL='([^']+)'/)[1];
       return filme;
+
+
      }
   })
   .catch(error => console.error('Fehler bei der API-Anfrage:', error));
 
 
-}
+}*/
+
+var filmTitelVorst;
+var uhrzeit;
+var datum;
+var vorstellungen = [];
+  function fetchFunctionVorst(i, titel){
+    console.log(titel);
+  console.log("fetch Vorstellungen beginnt");
+  fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/vorstellungAnzeigen')
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      console.log(titel);
+    const vorstellungsText = data;
+   var vorstellungen = data.match(/Vorstellung{[^}]+}/g);
+
+    for (let y = 0; y < vorstellungen.length; y++) {
+      var vorstellung = vorstellungen[y];
+      filmTitelVorst = vorstellung.match(/filmTitel='([^']+)'/)[1];
+      uhrzeit = vorstellung.match(/zeit=([^']+)/)[1];
+     datum = vorstellung.match(/datum=([^']+)/)[1];
+
+      //const kinosaal = vorstellung.match(/kinosaal=(\d+)/);
+      //const sitzplan = vorstellung.match(/sitzplan=(\d+)/);
+    };
+    createVorstellungen(vorstellungen, i, titel);
+    })
+
+    .catch(error => {
+      console.log('Fehler beim Abrufen der Daten:', error);
+    });
+  }
+
+
+  function createVorstellungen(vorstellungen,i, titel){
+    console.log(titel + "Vorstellungstitel:"+ filmTitelVorst);
+    for (var z = 0; z < vorstellungen.length; z++){
+        var bspVorstellung = vorstellungen[z].match(/filmTitel='([^']+)'/)[1];
+        
+        console.log("Vorstellungen durchgehen." + bspVorstellung);
+
+      if(bspVorstellung == titel){
+        console.log("Titel Überprüfung." + bspVorstellung + " und "+ titel);
+        uhrzeit = vorstellungen[z].match(/zeit=([^,]+)/)[1];
+        datum = vorstellungen[z].match(/datum=([^,]+)/)[1];
+        var vorstID = vorstellungen[z].match(/sitzplan=([^,]+)/)[1]
+
+        const dynVorst = document.getElementById('vorstellungendaten'+ i);
+        dynVorst.innerHTML += `
+         <tr>
+          <p onclick="getButtonText(event)" id="${i}" data-meinevariable="${vorstID}" class="Vorstellungsbutton">${datum}, ${uhrzeit}  </p> 
+         </tr>
+    `
+    console.log("button erstellt. ");
+      }
+      else 
+      console.log("keine übereinstimmung");
+  }
+  console.log("done");
+  z=0;
+  }
 
 /* Programmfilter, Genre*/
 document.getElementById('genre').addEventListener('change', function() {
@@ -63,8 +128,9 @@ document.getElementById('fsk').addEventListener('change', function() {
   function getButtonText(event){
     var element = event.target;
     var idFilm = element.id;
+    var vorstellungID = element.dataset.meinevariable;
     console.log(idFilm);
-    window.location.href = "Buchung.html?id=" + idFilm;
+    window.location.href = "Buchung.html?id=" + idFilm + "&vorstID="+vorstellungID;
   }
   function navigateBuchung (){
    
@@ -72,6 +138,7 @@ document.getElementById('fsk').addEventListener('change', function() {
     Buchung.html.getElementById("Vorstellungszeit")= buttonText; 
   }
   var filme = [];
+  var vorstellungen = [];
   var i;
   var titel;
   // Anzeige vom Programm: Samu 
@@ -90,7 +157,7 @@ document.getElementById('fsk').addEventListener('change', function() {
   
                   for (let i = 0; i < filme.length; i++) {
                     const film = filme[i];
-                   titel = film.match(/titel='([^']+)'/)[1];
+                    titel = film.match(/titel='([^']+)'/)[1];
                     const genre = film.match(/genre='([^']+)'/)[1];
                     const fsk = film.match(/fsk=(\d+)/)[1];
                     const dauer = film.match(/dauer=(\d+)/)[1];
@@ -98,7 +165,7 @@ document.getElementById('fsk').addEventListener('change', function() {
                     //const ermaßigt = film.match(/ermaßigt=(\d+)/)[1];
                     //const kinder = film.match(/kinder=(\d+)/)[1];
                     //const kategorie = film.match(/kategorie='([^']+)'/)[1];
-                
+                    
                 
                     const ausgabe = document.getElementById('FilmAusgabe');
                     ausgabe.innerHTML += `
@@ -107,65 +174,21 @@ document.getElementById('fsk').addEventListener('change', function() {
                         <div >
                             <table class="programmzusammenfassung">
                               <tr>
-                                <td class="Abstand3"></td>
-                                <td class="Abstand4 plakate-box"><img id="${i+1}" onclick="filmdetails(event)" src="../img/filmplakat.jpeg" alt="Filmposter" class="poster"></td>
-                                <td class="Abstand5">
+                                <td></td>
+                                <td class=" plakate-box"><img id="${i+1}" onclick="filmdetails(event)" src="../img/filmplakat.jpeg" alt="Filmposter" class="poster"></td>
+                                <td >
                                   <table>
                                     <tr class="Info-Anzeige">
-                                  <div class="Filmtitel" onclick="filmdetails(event)" id="${i+1}">${titel}</div>
-                                  <small><span class="genre">${genre}, FSK: <span class="fsk">${fsk}</span>, ${dauer} min</span></small>
+                                  <div class="Filmtitel Info-Anzeige" onclick="filmdetails(event)" id="${i+1}">${titel}</div>
+                                  <small><span class="genre Info-Anzeige">${genre}, FSK: <span class="fsk">${fsk}</span>, ${dauer} min</span></small>
                                 </tr>
                                 <mtr class="Vorstellungen-Anzeige">
-                                  <div>
-                        
-                                    <table>
-                                      <tr>
-                                        <th>Montag</th>
-                                        <th>Dienstag</th>
-                                        <th>Mittwoch</th>
-                                        <th>Donnerstag</th>
-                                        <th>Freitag</th>
-                                        <th>Samstag</th>
-                                        <th>Sonntag</th>
-                                      </tr>
-                                      <tr>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >16:30 </button> </td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >16:30 </button>  </td>
-                                        <td></td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton">16:30 </button> </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                      </tr>
-                                      <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >18:00 </button> </td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >18:00 </button></td>
-                                        <td></td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >18:00 </button></td>
-                                      </tr>
-                                      <tr>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >20:30 </button> </td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >20:30 </button></td>
-                                        <td></td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >20:30 </button></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >20:30 </button> </td>
-                                      </tr>
-                                      <tr>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >22:30 </button> </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >22:30 </button> </td>
-                                        <td></td>
-                                        <td><button onclick="getButtonText(event)" id="${i}" class="Vorstellungsbutton" >22:30 </button> </td>
-                                      </tr>
-                                    </table>
-                                  </div>
+                                <table>
+                                <div id="vorstellungendaten${i}"></div>
+                                <script>
+                                window.onload = createVorstellungen();
+                                </script>
+                                </table>
                                 </tr>
                                 </table>
                                 </td>
@@ -178,15 +201,14 @@ document.getElementById('fsk').addEventListener('change', function() {
                 </div>
                
                         `;
+                        fetchFunctionVorst(i, titel);
                   }
-	            })
-	            .catch(error => console.error('Fehler bei der API-Anfrage:', error));
-    
-  }
+  })}
+
   function filmdetails(event) {
     var clickedElementId = event.target.id;
+    console.log(clickedElementId);
     window.location.href = "Programm2.html?id=" + clickedElementId;
   }
-    
-
- 
+  /*Vorstellungen dynamisch einfügen*/
+   

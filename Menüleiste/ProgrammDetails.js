@@ -10,11 +10,11 @@ var kategorie;
 var trailerURL;
 var IDFIlm
 var beschreibung;
-
+var FilmID;
 document.addEventListener("DOMContentLoaded", function() {
     // Code, der beim Laden der Seite ausgeführt werden soll
     var urlParams = new URLSearchParams(window.location.search);
-    var FilmID = urlParams.get('id') - 1;
+     FilmID = urlParams.get('id') - 1;
     
     console.log("Die Seite wurde geladen!"+ FilmID);
     fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
          
 
          ProgrammErstellung();
+         fetchFunctionVorst( FilmID);
      }
   )
   .catch(error => console.log('Fehler bei der API-Anfrage:', error));
@@ -48,7 +49,36 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   
   );
+var filmTitelVorst;
+var uhrzeit;
+var datum;
+var vorstellungen = [];
+  function fetchFunctionVorst( FilmID){
+  console.log("fetch Vorstellungen beginnt mit der FilID:" + FilmID);
+  fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/vorstellungAnzeigen')
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      console.log(titel);
+    const vorstellungsText = data;
+   var vorstellungen = data.match(/Vorstellung{[^}]+}/g);
 
+    for (let y = 0; y < vorstellungen.length; y++) {
+      var vorstellung = vorstellungen[y];
+      filmTitelVorst = vorstellung.match(/filmTitel='([^']+)'/)[1];
+      uhrzeit = vorstellung.match(/zeit=([^']+)/)[1];
+     datum = vorstellung.match(/datum=([^']+)/)[1];
+
+      //const kinosaal = vorstellung.match(/kinosaal=(\d+)/);
+      //const sitzplan = vorstellung.match(/sitzplan=(\d+)/);
+    };
+    createVorstellungen(vorstellungen, FilmID);
+    })
+
+    .catch(error => {
+      console.log('Fehler beim Abrufen der Daten:', error);
+    });
+  }
   
 function ProgrammErstellung(){
     
@@ -77,15 +107,17 @@ function ProgrammErstellung(){
                  <span class="Beschreibung" id="BeschreibungFilm"></span>    
                 </td>
                 <td class="Vorstellungendetails">
-                    <a class="Vorstellungendetails">Vorstellungen</a> 
+                    <a class="Vorstellungendetails"></a> 
+                    <div id="vorstellungendaten"></div>
                 </td>
             </tr>
         </table>
     </div>
 </div>
 `;
-   console.log(titel, dauer, fsk, genre, beschreibung);
+  // console.log(titel, dauer, fsk, genre, beschreibung);
     wertZuweisung();
+    
     ;
 }
 function wertZuweisung () {
@@ -96,5 +128,32 @@ function wertZuweisung () {
     var beschreibungfilm = document.getElementById("BeschreibungFilm");
     beschreibungfilm.innerHTML = beschreibung;
     document.getElementById("ytFrame").src.innerHTML = trailerURL;
-    console.log(beschreibung);
 }
+
+function createVorstellungen(vorstellungen, FilmID){
+    console.log(titel + "Vorstellungstitel:"+ filmTitelVorst);
+    for (var z = 0; z < vorstellungen.length; z++){
+        var bspVorstellung = vorstellungen[z].match(/filmTitel='([^']+)'/)[1];
+        
+        console.log("Vorstellungen durchgehen." + bspVorstellung);
+
+      if(bspVorstellung == titel){
+        console.log("Titel Überprüfung." + bspVorstellung + " und "+ titel);
+        uhrzeit = vorstellungen[z].match(/zeit=([^,]+)/)[1];
+        datum = vorstellungen[z].match(/datum=([^,]+)/)[1];
+        var vorstID = vorstellungen[z].match(/sitzplan=([^,]+)/)[1]
+        const dynVorst = document.getElementById('vorstellungendaten');
+        dynVorst.innerHTML += `
+         <tr>
+          <p onclick="getButtonText(event)" id="${FilmID}" data-meinevariable="${vorstID}" class="Vorstellungsbutton">${datum}, ${uhrzeit}  </p> 
+         </tr>
+    `
+    console.log("button erstellt. ");
+      }
+      else 
+      console.log("keine übereinstimmung");
+  }
+  console.log("done");
+  z=0;
+  }
+  
