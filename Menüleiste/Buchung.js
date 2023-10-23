@@ -1,14 +1,95 @@
-const axios = require('axios');
-const fs = require('fs');
+//const axios = require('axios');
+//const fs = require('fs');
+var film;
+var titel;
+var genre;
+var fsk;
+var dauer;
+var erwachsene;
+var ermaßigt;
+var kinder;
+var kategorie;
+var trailerURL;
+
+var filmTitelVorst;
+var uhrzeit;
+var datum;
+var vorstellungen = [];
+var gebuchteSitzeDaten = [];
 
 // Define the base URL for your FastAPI server
 const baseUrl = 'https://dsssi-backend-booking.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io';
+
+document.addEventListener("DOMContentLoaded", function() {
+   gebuchteSitzeDaten = JSON.parse(localStorage.getItem('gebuchteSitze'));
+  console.log("test: "+gebuchteSitzeDaten);
+  if (gebuchteSitzeDaten) {
+    // Weitere Verarbeitung der Daten
+    for (var i = 0; i < gebuchteSitzeDaten.length; i++) {
+      var daten = gebuchteSitzeDaten[i];
+      console.log("IdFilm: " + daten.IdFilm + ", IdVorst: " + daten.IdVorst + ", IdSitz: " + daten.IdSitz);
+    }
+  } else {
+    console.log("Keine gespeicherten Daten gefunden.");
+  }
+  var FilmID = gebuchteSitzeDaten[0].IdFilm;
+  var vorstID = gebuchteSitzeDaten[0].IdVorst;
+
+  fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
+  .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
+  .then(data => {
+      // Hier können Sie die Ergebnisse in Ihrer HTML-Oberfläche anzeigen
+      const filmText = data;
+      const filme = filmText.match(/Film{[^}]+}/g);
+
+         film = filme[FilmID];
+         titel = film.match(/titel='([^']+)'/)[1];
+         genre = film.match(/genre='([^']+)'/)[1];
+         fsk = film.match(/fsk=(\d+)/)[1];
+         dauer = film.match(/dauer=(\d+)/)[1];
+         erwachsene = film.match(/erwachsene=(\d+)/)[1];
+         ermaßigt = film.match(/ermaessigt=(\d+)/)[1];
+         kinder = film.match(/kinder=(\d+)/)[1];
+         kategorie = film.match(/kategorie='([^']+)'/)[1];
+         trailerURL = film.match(/trailerURL='([^']+)'/)[1];
+         var Titel = document.getElementById("aktuellerTitel");
+     }
+  )
+  .catch(error => console.error('Fehler bei der API-Anfrage:', error));
+
+  fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/vorstellungAnzeigen')
+  .then(response => response.text())
+  .then(data => {
+   const vorstellungen = data.match(/Vorstellung{[^}]+}/g);
+
+    var vorstellung = vorstellungen[vorstID];
+    filmTitelVorst = vorstellung.match(/filmTitel='([^']+)'/)[1];
+    uhrzeit = vorstellung.match(/zeit=([^']+)/)[1];
+    datum = vorstellung.match(/datum=([^']+)/)[1];
+
+    //const kinosaal = vorstellung.match(/kinosaal=(\d+)/);
+  
+  })
+
+  .catch(error => {
+    console.log('Fehler beim Abrufen der Daten:', error);
+});
+  datenAusgabe();
+});
+
+function datenAusgabe(){
+  for (var i = 0; i < gebuchteSitzeDaten.length; i++) {
+    var daten = gebuchteSitzeDaten[i];
+    console.log("Die Buchung enthält folgende Daten: "+ titel+ "Am Tag und zur Zeit:"+ datum+ uhrzeit+  ", IdSitz: " + daten.IdSitz);
+  }
+}
+
 
 
  /* Navigation Buchung 3 */
  var button = document.getElementById("testBuchung");
   button.addEventListener("click", redirectToBuchung3);
-
+/*
  function redirectToBuchung3() {
      // Create a new booking
   // Call the /hello endpoint
@@ -91,4 +172,4 @@ async function validateBooking(bookingId) {
     console.error('Error validating booking:', error.response.data);
   }
 }
-
+*/

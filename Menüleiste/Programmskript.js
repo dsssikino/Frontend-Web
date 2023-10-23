@@ -22,7 +22,7 @@ var vorstellungen = [];
      datum = vorstellung.match(/datum=([^']+)/)[1];
 
       //const kinosaal = vorstellung.match(/kinosaal=(\d+)/);
-      //const sitzplan = vorstellung.match(/sitzplan=(\d+)/);
+      const vorstID = vorstellung.match(/sitzplan=(\d+)/);
     };
     createVorstellungen(vorstellungen, i, titel);
     })
@@ -44,7 +44,7 @@ var vorstellungen = [];
         console.log("Titel Überprüfung." + bspVorstellung + " und "+ titel);
         uhrzeit = vorstellungen[z].match(/zeit=([^,]+)/)[1];
         datum = vorstellungen[z].match(/datum=([^,]+)/)[1];
-        var vorstID = vorstellungen[z].match(/sitzplan=([^,]+)/)[1]
+        var vorstID = vorstellungen[z].match(/sitzplan=([^}]+)/)[1]
 
         const dynVorst = document.getElementById('vorstellungendaten'+ i);
         dynVorst.innerHTML += `
@@ -160,7 +160,7 @@ function titelFiltern() {
   function filmdetails(event) {
     var clickedElementId = event.target.id;
     console.log(clickedElementId);
-    window.location.href = "Programm2.html?id=" + clickedElementId;
+    window.location.href = "Programm2.html?id=" + clickedElementId + "&vorstID="+ vorstID;
   }
   /*Vorstellungen dynamisch einfügen*/
    

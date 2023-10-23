@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var urlParams = new URLSearchParams(window.location.search);
  IDFIlm = urlParams.get('id');
  IDVorst = urlParams.get('vorstID');
-
+ console.log("die Vorstellungsid ist: "+ IDVorst);
     console.log("Die Seite wurde geladen!"+ IDFIlm);
     fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
   .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
@@ -51,31 +51,30 @@ var selectedButtons = [];
 
 function toggleSelection(button) {
     var index = selectedButtons.indexOf(button);
-
     if (index === -1) {
       // Button ist nicht im Array, füge ihn hinzu
       addToSelectedList(button);
       button.classList.add("selected");
-      updateSelectedList();
+      updateSelectedList(IDVorst);
       console.log("Button hinzugefügt:", button.textContent);
     } else {
       // Button ist bereits im Array, entferne ihn
       deleteFromSelectedList(index, 1);
-      updateSelectedList();
+      updateSelectedList(IDVorst);
       button.classList.remove("selected");
       console.log("Button entfernt:", button.textContent);
     }
     }
 
 
-function addToSelectedList(buttonId) {
+function addToSelectedList(buttonId,IDVorst) {
 selectedButtons.push(buttonId);
-updateSelectedList();
+updateSelectedList(IDVorst);
 }
 
 function deleteFromSelectedList (buttonId) {
     selectedButtons.splice(buttonId,1);
-    updateSelectedList();
+    updateSelectedList(IDVorst);
 }
 
 function preisErmitteln(){
@@ -84,29 +83,38 @@ function preisErmitteln(){
      
 }
 
-function updateSelectedList() {
+function updateSelectedList(IDVorst) {
+
 var selectedList = document.getElementById("selectedList");
 selectedList.innerHTML = "";
+var urlParams = new URLSearchParams(window.location.search);
+ IDFIlm = urlParams.get('id');
+ IDVorst = urlParams.get('vorstID');
 
 for (var i = 0; i < selectedButtons.length; i++) {
-    
+  
+ console.log("Überprüfung ob id vorhanden: "+IDVorst);
+
     selectedList.innerHTML +=`
     <div>
     <table>
   <tr>
+  
     <th>Sitz <span id="SitzID${i}"></span>:</th>
     <th>
-    <input type="radio" id="erw${i}" name="group${i}" data-sitzID="${selectedButtons[i]}" onclick="saveSelectedRatios(${i})">
+    
+    <input type="radio" id="erw${i}" name="group${i}" onclick="saveSelectedRatios(${i})" data-parameter1="${IDVorst}" data-parameter2="${selectedButtons[i].id}" >    
     <label for="erw${i}">Erwachsener</label>
 
     </th>
     <th>
-    <input type="radio" id="erm${i}" name="group${i}" data-sitzID="${selectedButtons[i]}" onclick="saveSelectedRatios(${i})">
+    <input type="radio" id="erm${i}" name="group${i}" onclick="saveSelectedRatios(${i})" data-parameter1="${IDVorst}" data-parameter2="${selectedButtons[i].id}" >
     <label for="erm${i}">Ermäßigt</label>
 
     </th>
     <th>
-    <input type="radio" id="Kind${i}" name="group${i}" data-sitzID="${selectedButtons[i]}" onclick="saveSelectedRatios(${i})">
+    <input type="radio" id="Kind${i}" name="group${i}" onclick="saveSelectedRatios(${i})" data-parameter1="${IDVorst}" data-parameter2="${selectedButtons[i].id}" >
+    
     <label for="kind${i}">Kind</label>
 
     </th>
@@ -148,14 +156,33 @@ function ratioAuswahlt(ratioInputs, i) {
   }
 }
 
+var ratioInputs = [];
 function saveSelectedRatios(i) {
-  var ratioInputs = document.querySelectorAll('input[type="radio"]:checked');
+  ratioInputs = document.querySelectorAll('input[type="radio"]:checked');
   ratioAuswahlt(ratioInputs,i);
   console.log(ratioInputs);
 }
 
+function getRatioArray(){
+}
 
 /* buchen */
 function buchen(){
-window.location.href = "Buchung2.html";
+  werteAuslesen(ratioInputs);
+  //console.log(ratioInputs + "  "+ jsonArrayList);
+  window.location.href = "Buchung2.html";
+}
+var gebuchteSitzeDaten=[];
+
+function werteAuslesen(ratioInputs){
+  for(var c =0; c<ratioInputs.length;c++){
+    var ratioInput = ratioInputs[c];
+    var vorstID2 = ratioInput.dataset.parameter1;
+    var sitzID2 = ratioInput.dataset.parameter2;
+    gebuchteSitzeDaten.push({IdFilm : IDFIlm, IdVorst: vorstID2, IdSitz: sitzID2})
+    console.log("Hier wird getestet, ob die VOrstellungsid ausgelesen werden kann: "+vorstID2+"sitzid: "+ sitzID2+ "filmid: " + IDFIlm );
+    
+  }
+  localStorage.setItem('gebuchteSitze', JSON.stringify(gebuchteSitzeDaten));
+
 }
