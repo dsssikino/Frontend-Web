@@ -1,37 +1,4 @@
-var titel;
-// fetch aufrufen und variablen einpflegen 
-/*function fetchAufruf (){
-  fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
-  .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
-  .then(data => {
-      // Hier können Sie die Ergebnisse in Ihrer HTML-Oberfläche anzeigen
-      console.log(data);
-      const filmText = data;
-      const filme = filmText.match(/Film{[^}]+}/g);
-
-
-
-      for (let i = 0; i < filme.length; i++) {
-        const film = filme[i];
-        titel = film.match(/filmTitel='([^']+)'/)[1];
-        console.log(titel);
-        const genre = film.match(/genre='([^']+)'/)[1];
-        const fsk = film.match(/fsk=(\d+)/)[1];
-        const dauer = film.match(/dauer=(\d+)/)[1];
-        const erwachsene = film.match(/erwachsene=(\d+)/)[1];
-        const ermaßigt = film.match(/ermaessigt=(\d+)/)[1];
-        const kinder = film.match(/kinder=(\d+)/)[1];
-        const kategorie = film.match(/kategorie='([^']+)'/)[1];
-        const trailerURL = film.match(/trailerURL='([^']+)'/)[1];
-      return filme;
-
-
-     }
-  })
-  .catch(error => console.error('Fehler bei der API-Anfrage:', error));
-
-
-}*/
+//var titel;
 
 var filmTitelVorst;
 var uhrzeit;
@@ -93,37 +60,22 @@ var vorstellungen = [];
   console.log("done");
   z=0;
   }
-
-/* Programmfilter, Genre*/
-document.getElementById('genre').addEventListener('change', function() {
-    var selectedCategory = this.value;
-    var products = document.getElementsByClassName('genre'); /* Class genre bei Filmen im genre parameter */
-  
-    for (var i = 0; i < products.length; i++) {
-      var product = products[i];
-  
-      if (selectedCategory === 'all' || product.classList.contains(selectedCategory)) {
-        product.style.display = 'block';
-      } else {
-        product.style.display = 'none';
-      }
+/* Programmfilter, Titel*/
+function titelFiltern() {
+  console.log("filtern startet");
+  var selectTitel = document.getElementById("searchInput").value;
+  var products = document.getElementsByClassName('titel');
+  console.log("nach folgendem wert wird gesucht:"+ selectTitel);
+  for (var i = 0; i < products.length; i++) {
+    var product = products[i];
+    if (selectTitel === 'all' || product.classList.contains(selectTitel)) {
+      product.style.display = 'block';
+    } else {
+      product.style.display = 'none';
     }
-  });
-/* Programmfilter, FSK*/
-document.getElementById('fsk').addEventListener('change', function() {
-    var selectedCategory = this.value;
-    var products = document.getElementsByClassName('fsk'); /* Class FSK bei Filmen im fsk parameter */
-  
-    for (var i = 0; i < products.length; i++) {
-      var product = products[i];
-  
-      if (selectedCategory === 'all' || product.classList.contains(selectedCategory)) {
-        product.style.display = 'block';
-      } else {
-        product.style.display = 'none';
-      }
-    }
-  });  
+  }
+};
+ 
   /* Button auslesen*/
   function getButtonText(event){
     var element = event.target;
@@ -179,8 +131,8 @@ document.getElementById('fsk').addEventListener('change', function() {
                                 <td >
                                   <table>
                                     <tr class="Info-Anzeige">
-                                  <div class="Filmtitel Info-Anzeige" onclick="filmdetails(event)" id="${i+1}">${titel}</div>
-                                  <small><span class="genre Info-Anzeige">${genre}, FSK: <span class="fsk">${fsk}</span>, ${dauer} min</span></small>
+                                  <div class="Filmtitel Info-Anzeige" onclick="filmdetails(event)" id="titel">${titel}</div>
+                                  <small><span class="genre Info-Anzeige" id="genre">${genre}</span> , FSK: <span class="fsk" id="fsk">${fsk}</span>, ${dauer} min</span></small>
                                 </tr>
                                 <mtr class="Vorstellungen-Anzeige">
                                 <table>

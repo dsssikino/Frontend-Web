@@ -8,14 +8,16 @@ var ermaßigt;
 var kinder;
 var kategorie;
 var trailerURL;
-var IDFIlm
-
+var IDFIlm;
+var IDVorst;
 
 document.addEventListener("DOMContentLoaded", function() {
     // Code, der beim Laden der Seite ausgeführt werden soll
     
     var urlParams = new URLSearchParams(window.location.search);
  IDFIlm = urlParams.get('id');
+ IDVorst = urlParams.get('vorstID');
+
     console.log("Die Seite wurde geladen!"+ IDFIlm);
     fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
   .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
@@ -78,7 +80,7 @@ function deleteFromSelectedList (buttonId) {
 
 function preisErmitteln(){
      var gesamtBetrag = 0;
-     getSelectedCheckboxes;
+     
      
 }
 
@@ -94,18 +96,23 @@ for (var i = 0; i < selectedButtons.length; i++) {
   <tr>
     <th>Sitz <span id="SitzID${i}"></span>:</th>
     <th>
+    <input type="radio" id="erw${i}" name="group${i}" data-sitzID="${selectedButtons[i]}" onclick="saveSelectedRatios(${i})">
     <label for="erw${i}">Erwachsener</label>
-    <input type="radio" id="erw${i}" name="group${i}" onclick="saveSelectedRatios()">
+
     </th>
     <th>
+    <input type="radio" id="erm${i}" name="group${i}" data-sitzID="${selectedButtons[i]}" onclick="saveSelectedRatios(${i})">
     <label for="erm${i}">Ermäßigt</label>
-    <input type="radio" id="erm${i}" name="group${i}" onclick="saveSelectedRatios()">
+
     </th>
     <th>
+    <input type="radio" id="Kind${i}" name="group${i}" data-sitzID="${selectedButtons[i]}" onclick="saveSelectedRatios(${i})">
     <label for="kind${i}">Kind</label>
-    <input type="radio" id="Kind${i}" name="group${i}" onclick="saveSelectedRatios()">
+
     </th>
-    <th><span id="ticketPreis${i}"></span></th>
+    <th>
+    <label for="ticketPreisEinz${i}">-Preis:</label>
+    <span id="ticketPreisEinz${i}"></span></th>
   </tr>
 </table>
     </div>
@@ -116,57 +123,39 @@ for (var i = 0; i < selectedButtons.length; i++) {
     
 }
 }
+
 var gesamtSumme;
-/*function ratioAuswahlt(this) {
-    var id = this.id;
-    var kategorie = id.text.substring(0, 3);
-    if(kategorie == "erw"){
-        var preis = document.getElementById("ticketPreis"+IDFIlm);
-        preis.innerHTML = erwachsene;
-    }
-    else if(kategorie == "erm"){
-        var preis = document.getElementById("ticketPreis"+IDFIlm);
-        preis.innerHTML = ermaßigt;
-    }
-    else (kategorie == "kin")
-        var preis = document.getElementById("ticketPreis"+IDFIlm);
-        preis.innerHTML = kinder;
-    
-}*/
 
-function saveSelectedRatios() {
-  var ratioInputs = document.querySelectorAll('input[type="radio"]');
+function ratioAuswahlt(ratioInputs, i) {
+  console.log("Kinder: " + kinder + " Erwachsener: " + erwachsene + " ermäßigt: " + ermaßigt);
 
+  for (var a = 0; a < ratioInputs.length; a++) {
+    var button = ratioInputs[a];
+    var id = button.id;
+    var kategorie = id.substring(0, 3);
+
+    if (kategorie == "erw") {
+      document.getElementById("ticketPreisEinz" + i).innerHTML = erwachsene + "€";
+      console.log("erwachsenerticketpreis " + erwachsene + " " + i);
+    } else if (kategorie == "erm") {
+      document.getElementById("ticketPreisEinz" + i).innerHTML = ermaßigt  + "€";
+      console.log("ermäßigtticketpreis " + ermaßigt + " " + i);
+    } else if (kategorie == "Kin") {
+      document.getElementById("ticketPreisEinz" + i).innerHTML = kinder + "€";
+      console.log("Kinderticketpreis " + kinder + " " + i);
+    }
+    else console.log("Fehler");
+  }
+}
+
+function saveSelectedRatios(i) {
+  var ratioInputs = document.querySelectorAll('input[type="radio"]:checked');
+  ratioAuswahlt(ratioInputs,i);
   console.log(ratioInputs);
 }
 
-function getSelectedItems() {
-    var list = document.getElementById("list");
-    var checkboxes = list.querySelectorAll("input[type='checkbox']:checked");
-  
-    checkboxes.forEach(function(checkbox) {
-      var listItem = checkbox.parentNode;
-      var itemName = listItem.querySelector("span").textContent;
-      console.log(itemName);
-    });
-  }
+
 /* buchen */
 function buchen(){
-getSelectedCheckboxes();
 window.location.href = "Buchung2.html";
-}
-
-/* Checkbox Überprüfung  */
-var selectedKategorie = [];
-
-function getSelectedCheckboxes() {
-var selectedList = document.getElementById("selectedList");
-selectedList.innerHTML = "";
-
-var checkboxes = document.querySelectorAll("input[type='checkbox']");
-for (var i = 0; i < checkboxes.length; i++) {
-  if (checkboxes[i].checked) {
-    selectedKategorie.push(checkboxes[i], checkboxes[i].id);
-}
-}
 }
