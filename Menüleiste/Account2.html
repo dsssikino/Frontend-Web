@@ -26,16 +26,25 @@
   <div class="container2">
     <h2>Anmeldung / Registrierung</h2>
     <form id="loginForm">
-      <input class="inputFeld" type="text" id="username" placeholder="Benutzername" required></br>
-      <input class="inputFeld" type="password" id="password" placeholder="Passwort" required></br>
-      <button class="Anmeldung" type="submit">Anmelden</button>
+        <table>
+            <tr>
+                    <input class="inputFeld2" type="text" id="firstname" placeholder="Vorname" required></br>
+                    <input class="inputFeld2" type="text" id="lastname" placeholder="Nachname" required></br>
+                
+            </tr>
+            <tr>
+                <input class="inputFeld1" type="text" id="username" placeholder="Benutzername" required></br>
+            </tr>
+            <tr>
+                <input class="inputFeld1" type="password" id="password" placeholder="Passwort" required></br>
+            </tr>
+            <tr>
+                <button class="Anmeldung" type="submit">Anmelden</button>
+            </tr>
+        </table>
     </form>
-    <p>Noch kein Konto? <a href="Account2.html" id="registerLink">Registrieren</a></p>
-    <form id="registerForm" style="display: none;">
-      <input type="text" id="newUsername" placeholder="Neuer Benutzername" required>
-      <input type="password" id="newPassword" placeholder="Neues Passwort" required>
-      <button type="submit">Registrieren</button>
-    </form>
+    <p>Du hast bereits ein Konto? <a href="Account.html" id="registerLink">Anmelden</a></p>
+    
   </div>
 
 </div>

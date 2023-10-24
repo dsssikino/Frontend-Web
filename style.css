@@ -161,6 +161,9 @@ body {
     align-items: left;
     vertical-align: top;
   }
+  .Abstand7 {
+    width: 45%;
+  }
   .Abstand{
     width: 25%;
   }
@@ -423,6 +426,11 @@ border-radius: 5px;
   overflow-wrap: break-word;
 
 }
-.Vorstellungendetails {
-
+.inputFeld1 {
+  width: 300px;
+  
+}
+.inputFeld2 {
+  width: 150px;
+  
 }
