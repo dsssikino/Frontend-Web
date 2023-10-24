@@ -172,14 +172,17 @@ function buchen(){
   //console.log(ratioInputs + "  "+ jsonArrayList);
   window.location.href = "Buchung2.html";
 }
-var gebuchteSitzeDaten=[];
 
 function werteAuslesen(ratioInputs){
+  var gebuchteSitzeDaten=[];
+
   for(var c =0; c<ratioInputs.length;c++){
     var ratioInput = ratioInputs[c];
     var vorstID2 = ratioInput.dataset.parameter1;
     var sitzID2 = ratioInput.dataset.parameter2;
-    gebuchteSitzeDaten.push({IdFilm : IDFIlm, IdVorst: vorstID2, IdSitz: sitzID2})
+    var sitzID2 = ratioInput.dataset.parameter2;
+    var kat = ratioInput.id;
+    gebuchteSitzeDaten.push({IdFilm : IDFIlm, IdVorst: vorstID2, IdSitz: sitzID2, kategorie: kat})
     console.log("Hier wird getestet, ob die VOrstellungsid ausgelesen werden kann: "+vorstID2+"sitzid: "+ sitzID2+ "filmid: " + IDFIlm );
     
   }
