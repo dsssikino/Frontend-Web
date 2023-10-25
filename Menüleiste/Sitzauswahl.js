@@ -13,7 +13,67 @@ var IDVorst;
 
 document.addEventListener("DOMContentLoaded", function() {
     // Code, der beim Laden der Seite ausgeführt werden soll
-    
+    const saalplanElement = document.getElementById("saalplan");
+    saalplanElement.innerHTML = `
+    <div class="button-container">
+  <!-- Erste Reihe -->
+  <button class='custom-button' id='1' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='2' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='3' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='4' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='5' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='6' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='7' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='8' onclick='toggleSelection(this)'></button>
+  <!-- Zweite Reihe -->
+</div>
+<div class="button-container">
+  <button class='custom-button' id='9' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='10' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='11' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='12' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='13' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='14' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='15' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='16' onclick='toggleSelection(this)'></button>
+</div>
+<div class="button-container">
+  <button class='custom-button' id='17' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='18' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='19' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='20' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='21' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='22' onclick='toggleSelection(this)'></button>
+
+</div>
+<div class="button-container">
+  <button class='custom-button' id='23' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='24' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='25' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='26' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='27' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='28' onclick='toggleSelection(this)'></button>
+</div>
+<div class="button-container">
+  <button class='custom-button' id='29' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='30' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='31' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='32' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='33' onclick='toggleSelection(this)'></button>
+
+</div>
+<div class="button-container">
+  <button class='custom-button' id='34' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='35' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='36' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='37' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='38' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='39' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='40' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='41' onclick='toggleSelection(this)'></button>
+</div>
+    `;
+    console.log("es wurden nun alle button erstellt und die ID muss existieren!!");
     var urlParams = new URLSearchParams(window.location.search);
  IDFIlm = urlParams.get('id');
  IDVorst = urlParams.get('vorstID');
@@ -39,25 +99,51 @@ document.addEventListener("DOMContentLoaded", function() {
          trailerURL = film.match(/trailerURL='([^']+)'/)[1];
          var Titel = document.getElementById("aktuellerTitel");
         Titel.innerHTML = titel;
+        belegung();
      }
   )
   .catch(error => console.error('Fehler bei der API-Anfrage:', error));
   console.log(titel);
-  
-  var raw = "";
+    })
 
+  var raw = "";
+  var sitze = [];
+
+  function belegung(){
 var requestOptions = {
   method: 'POST',
   body: raw,
   redirect: 'follow'
 };
 
-fetch("https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/sitzplanAnzeigen?sitzplan=154309957", requestOptions)
+fetch("https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/sitzplanAnzeigen?sitzplan="+ IDVorst, requestOptions)
   .then(response => response.text())
-  .then(result => console.log(result))
+  .then(data => {
+    // Hier können Sie die Ergebnisse in Ihrer HTML-Oberfläche anzeigen
+    console.log(data);
+    const sitzText = data;
+    sitze = sitzText.match(/{[^}]+}/g); 
+    console.log(sitze +"und für einen test"+ sitze[12]);
+    sitzeÜberprüfen(sitze);
+  })
   .catch(error => console.log('error', error));
-  });
+}
 
+
+function sitzeÜberprüfen(sitze){
+  const trennzeichen = " ";
+    for(var i= 0; i < sitze.length; i++){
+       if(sitze[i].includes('true')){
+        const position = sitze[i].indexOf(trennzeichen);
+        const sitzID3 = sitze[i].substring(0, position);
+        const sitzID4 =  sitzID3.replace(/{/,"");
+        const button = document.getElementById(sitzID4);
+        button.classList.toggle("selected");
+        button.disabled = true;
+        console.log(sitze[i]);
+       }
+    }
+}
 var selectedButtons = [];
 
 function toggleSelection(button) {
@@ -87,12 +173,8 @@ function deleteFromSelectedList (buttonId) {
     selectedButtons.splice(buttonId,1);
     updateSelectedList(IDVorst);
 }
+  
 
-function preisErmitteln(){
-     var gesamtBetrag = 0;
-     
-     
-}
 
 function updateSelectedList(IDVorst) {
 
