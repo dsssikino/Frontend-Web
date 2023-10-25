@@ -81,7 +81,7 @@ var vorstellungen = [];
   }
   
 function ProgrammErstellung(){
-    
+    console.log(trailerURL);
     var div = document.getElementById("output");
     div.innerHTML +=`
     <div class="card">
@@ -89,7 +89,7 @@ function ProgrammErstellung(){
         <tr>
             <td>
                 <div class="card__img">
-                    <iframe class="card__img" id="ytFrame" width="504" height="284" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe class="card__img" width="504" height="284" src="${trailerURL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </td>
             <td>
@@ -127,7 +127,7 @@ function wertZuweisung () {
     DatenFilm.innerHTML = dauer + "min,  FSK: "+ fsk + ", "+ genre ;
     var beschreibungfilm = document.getElementById("BeschreibungFilm");
     beschreibungfilm.innerHTML = beschreibung;
-    document.getElementById("ytFrame").src.innerHTML = trailerURL;
+    //document.getElementById("ytFrame").src.innerHTML = trailerURL;
 }
 
 function createVorstellungen(vorstellungen, FilmID){

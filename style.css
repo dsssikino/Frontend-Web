@@ -79,6 +79,8 @@ body {
 }
 .text-buchen {
     text-align: center;
+    color: black;
+    text-decoration: none;
 }
 
 .Filmanzeige-Tabelle {
@@ -306,8 +308,11 @@ body {
 }
 
 /* Stil für die ausgewählten Buttons */
-.custom-button.selected {
+.custom-button.disabled {
   background-color: #e74c3c;
+}
+.custom-button.selected {
+  background-color: #83cf72;
 }
 .leinwand {
   width: 12cm;
@@ -338,6 +343,9 @@ body {
 
 .box2 {
   background-color: rgb(157, 157, 157);
+}
+.box3 {
+  background-color: #83cf72;
 }
 .Boxanordnung {
   display: flex;

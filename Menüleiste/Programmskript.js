@@ -5,6 +5,7 @@ var uhrzeit;
 var datum;
 var vorstellungen = [];
 var vorstID;
+var kinosaal;
   function fetchFunctionVorst(i, titel){
     console.log(titel);
   console.log("fetch Vorstellungen beginnt");
@@ -22,7 +23,7 @@ var vorstID;
       uhrzeit = vorstellung.match(/zeit=([^']+)/)[1];
      datum = vorstellung.match(/datum=([^']+)/)[1];
 
-      //const kinosaal = vorstellung.match(/kinosaal=(\d+)/);
+       kinosaal = vorstellung.match(/kinosaal=(\d+)/);
      vorstID = vorstellung.match(/sitzplan=(\d+)/);
     };
     createVorstellungen(vorstellungen, i, titel);
@@ -32,8 +33,15 @@ var vorstID;
       console.log('Fehler beim Abrufen der Daten:', error);
     });
   }
-
-
+var kino;
+function subStringsaal(kino){
+  let string = JSON.stringify(kino);
+  console.log(string);
+  var test = string.substring(11);
+  var test2 = test.slice(0, -2);
+    console.log("Der Saal konnte extrahiert werden: "+test2);
+    return test2;
+}
   function createVorstellungen(vorstellungen,i, titel){
     console.log(titel + "Vorstellungstitel:"+ filmTitelVorst);
     for (var z = 0; z < vorstellungen.length; z++){
@@ -45,12 +53,15 @@ var vorstID;
         console.log("Titel Überprüfung." + bspVorstellung + " und "+ titel);
         uhrzeit = vorstellungen[z].match(/zeit=([^,]+)/)[1];
         datum = vorstellungen[z].match(/datum=([^,]+)/)[1];
-        var vorstID = vorstellungen[z].match(/sitzplan=([^}]+)/)[1]
+        var vorstID = vorstellungen[z].match(/sitzplan=([^}]+)/)[1];
+         kino = vorstellungen[z].match(/kinosaal=[\d]+/);
+         kinosaal = subStringsaal(kino);
+       // kinosaal = vorstellungen[z].match(/kinosaal=([^}]+)/);
 
         const dynVorst = document.getElementById('vorstellungendaten'+ i);
         dynVorst.innerHTML += `
          <tr>
-          <p onclick="getButtonText(event)" id="${i}" data-meinevariable="${vorstID}" class="Vorstellungsbutton">${datum}, ${uhrzeit}  </p> 
+          <p onclick="getButtonText(event)" id="${i}" data-meinevariable2="${kinosaal}" data-meinevariable="${vorstID}" class="Vorstellungsbutton">${datum}, ${uhrzeit}  </p> 
          </tr>
     `
     console.log("button erstellt. ");
@@ -82,8 +93,15 @@ function titelFiltern() {
     var element = event.target;
     var idFilm = element.id;
     var vorstellungID = element.dataset.meinevariable;
+    var saalid = element.dataset.meinevariable2;
+    console.log("Die Vorstellung findet hier statt.: " + saalid)
+    if(saalid == 1){
+      window.location.href = "Buchunga.html?id=" + idFilm + "&vorstID="+vorstellungID;
+    }
+    else {
+      window.location.href = "Buchung.html?id=" + idFilm + "&vorstID="+vorstellungID;
+    }
     console.log(idFilm);
-    window.location.href = "Buchung.html?id=" + idFilm + "&vorstID="+vorstellungID;
   }
   function navigateBuchung (){
    
@@ -114,7 +132,6 @@ function titelFiltern() {
                     const genre = film.match(/genre='([^']+)'/)[1];
                     const fsk = film.match(/fsk=(\d+)/)[1];
                     const dauer = film.match(/dauer=(\d+)/)[1];
-                    //const erwachsene = film.match(/erwachsene=(\d+)/)[1];
                     //const ermaßigt = film.match(/ermaßigt=(\d+)/)[1];
                     //const kinder = film.match(/kinder=(\d+)/)[1];
                     //const kategorie = film.match(/kategorie='([^']+)'/)[1];
@@ -161,6 +178,7 @@ function titelFiltern() {
   function filmdetails(event) {
     var clickedElementId = event.target.id;
     console.log(clickedElementId);
+    
     window.location.href = "Programm2.html?id=" + clickedElementId + "&vorstID="+ vorstID;
   }
   /*Vorstellungen dynamisch einfügen*/

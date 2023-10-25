@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const saalplanElement = document.getElementById("saalplan");
     saalplanElement.innerHTML = `
     <div class="button-container">
+</div>
+
+<div class="table-spacing"></div>
+<div class="button-container">
   <!-- Erste Reihe -->
   <button class='custom-button' id='1' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='2' onclick='toggleSelection(this)'></button>
@@ -44,34 +48,41 @@ document.addEventListener("DOMContentLoaded", function() {
   <button class='custom-button' id='20' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='21' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='22' onclick='toggleSelection(this)'></button>
-
-</div>
-<div class="button-container">
   <button class='custom-button' id='23' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='24' onclick='toggleSelection(this)'></button>
+</div>
+<div class="button-container">
   <button class='custom-button' id='25' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='26' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='27' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='28' onclick='toggleSelection(this)'></button>
-</div>
-<div class="button-container">
   <button class='custom-button' id='29' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='30' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='31' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='32' onclick='toggleSelection(this)'></button>
-  <button class='custom-button' id='33' onclick='toggleSelection(this)'></button>
-
 </div>
 <div class="button-container">
+  <button class='custom-button' id='33' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='34' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='35' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='36' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='37' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='38' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='39' onclick='toggleSelection(this)'></button>
+
+</div>
+<div class="button-container">
   <button class='custom-button' id='40' onclick='toggleSelection(this)'></button>
   <button class='custom-button' id='41' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='42' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='43' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='44' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='45' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='46' onclick='toggleSelection(this)'></button>
+  <button class='custom-button' id='47' onclick='toggleSelection(this)'></button>
 </div>
+
+<div class="button-container">
     `;
     console.log("es wurden nun alle button erstellt und die ID muss existieren!!");
     var urlParams = new URLSearchParams(window.location.search);
@@ -282,4 +293,3 @@ function werteAuslesen(ratioInputs){
   localStorage.setItem('gebuchteSitze', JSON.stringify(gebuchteSitzeDaten));
 
 }
-
