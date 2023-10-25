@@ -73,6 +73,10 @@ body {
 .plakate-box {
   padding-left: 50px;
 }
+.poster {
+  width: 200px;
+  height: auto;
+}
 .text-buchen {
     text-align: center;
 }
@@ -433,4 +437,10 @@ border-radius: 5px;
 .inputFeld2 {
   width: 150px;
   
+}
+.inputFeld3 {
+  width: 75px;
+}
+.inputFeld4 {
+  width: 225px;
 }

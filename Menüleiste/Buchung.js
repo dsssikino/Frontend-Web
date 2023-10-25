@@ -17,6 +17,8 @@ var datum;
 var vorstellungen = [];
 var gebuchteSitzeDaten = [];
 var kategorie;
+var FilmID;
+var vorstID;
 // Define the base URL for your FastAPI server
 const baseUrl = 'https://dsssi-backend-booking.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io';
 
@@ -32,14 +34,15 @@ document.addEventListener("DOMContentLoaded", function() {
  } else {
    console.log("Keine gespeicherten Daten gefunden.");
  }
- var FilmID = gebuchteSitzeDaten[0].IdFilm;
- var vorstID = gebuchteSitzeDaten[0].IdVorst;
+  FilmID = gebuchteSitzeDaten[0].IdFilm;
+  vorstID = gebuchteSitzeDaten[0].IdVorst;
 
- fetchFilme(FilmID);
- fetchVorst(vorstID);
+ fetchFilme(FilmID, vorstID);
+
 });
 
-function fetchFilme(FilmID){
+ function fetchFilme(FilmID, vorstID){
+  setTimeout(() => {
   fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
   .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
   .then(data => {
@@ -59,16 +62,15 @@ function fetchFilme(FilmID){
          trailerURL = film.match(/trailerURL='([^']+)'/)[1];
          var Titel = document.getElementById("aktuellerTitel");
          console.log("filme fetch");
-         datenAusgabe();
-
-
+         fetchVorst(vorstID);
      }
   )
   .catch(error => console.error('Fehler bei der API-Anfrage:', error));
-
+    })
 }
 
 function fetchVorst(vorstID){
+  setTimeout(() => {
   fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/vorstellungAnzeigen')
   .then(response => response.text())
   .then(data => {
@@ -86,20 +88,20 @@ function fetchVorst(vorstID){
    }
    }
    console.log("vorst fetch");
-   //datenAusgabe();
-
-
+datenAusgabe();
   })
 
   .catch(error => {
     console.log('Fehler beim Abrufen der Daten:', error);
 });
+  })
 }
 
 /* Problem:je nach Film ist der eine oder andere fetch "schneller"-> teil Variablen sind 
 dementsprechen für die datenÜbergabe unbekannt */
 
 function datenAusgabe(){
+  
   for (var i = 0; i < gebuchteSitzeDaten.length; i++) {
     var daten = gebuchteSitzeDaten[i];
     console.log("Die Buchung enthält folgende Daten: "+ titel+ "Am Tag und zur Zeit:"+ datum+ uhrzeit+  ", IdSitz: " + daten.IdSitz + ", kategorie: " + daten.kategorie);
@@ -139,8 +141,133 @@ function datenAusgabe(){
     }
     else console.log("Fehler");
   }
-  
 }
+ function betraagSummieren(gebuchteSitzeDaten){
+  
+  var summe = 0;
+  for(var e = 0; e <gebuchteSitzeDaten.length; e++){
+    var katcode = gebuchteSitzeDaten[e].kategorie.substring(0, 3);
+    console.log("die Kategorie eines sitzes ist: " + katcode);
+    if (katcode == "erw") {
+      summe = parseInt(summe) + parseInt(erwachsene);
+      console.log("erwachsenerticketpreis " + erwachsene + " " + i);
+    } else if (katcode == "erm") {
+      console.log("ermäßigtticketpreis " + ermaßigt + " " + i);
+      summe = parseInt(summe) + parseInt(ermaßigt);
+    } else if (katcode == "Kin") {
+      console.log("Kinderticketpreis " + kinder + " " + i);
+      summe= parseInt(summe) + parseInt(kinder);
+    }
+    else console.log("Fehler");
+  }
+  console.log("Die Summe der Katenpreise ist: " + summe+ "länge des array" +gebuchteSitzeDaten.length );
+  console.log("Hieri st die SUmme: " + summe );
+  return parseInt(summe);
+}
+  var sitzeID=[];
+
+function sitzArray(){
+  for(var e = 0; e <gebuchteSitzeDaten.length; e++){
+     sitzeID.push(gebuchteSitzeDaten[e].IdSitz);
+  }
+  return sitzeID;
+}
+
+
+  let transactionId2;
+  async function generateKey() {
+
+    const url = 'https://backend-idempotency-provider.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/generate-key/';
+
+    const des = {
+      "description": "neue_Buchung"
+    };
+    try {
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(des)
+      });
+
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        return data;
+      } else {
+        console.error('Server responded with status:', response.status);
+        return null;
+      }
+    } catch (error) {
+
+      console.error('Error generating key:', error);
+      return null;
+    }
+  }
+  const showId = vorstID;
+  const customerId = "3";
+
+  // Finde den Button anhand seiner ID.
+  document.addEventListener('DOMContentLoaded', function() {
+    // Dieser Code wird erst ausgeführt, wenn das HTML-Dokument vollständig geladen ist.
+    
+    const generateKeyButton = document.getElementById('generateKeyButton');
+    
+    generateKeyButton.addEventListener('click', () => {
+      const amount = betraagSummieren(gebuchteSitzeDaten);
+      const seats = sitzArray();
+
+      parseInt(amount);
+      console.log("Ich kenne die FilmId"+ vorstID+ "ich kenne die summe auch:"+ amount);
+      generateKey()
+        .then(data => {
+          if (data) {
+            console.log('Generated keys:', data.key);
+            transactionId2 = data.key;
+            sendBookingRequest(transactionId2,vorstID, customerId, seats, amount);
+          }
+        });
+    });
+  });
+  function sendBookingRequest(transaction,showId, customerId, seats, amount) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      "transaction_id": transaction,
+      "show_id": showId,
+      "customer_id": customerId,
+      "seats": seats,
+      "amount": amount
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    return fetch("https://dsssi-backend-booking.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/bookings/new", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result);
+        return result;
+      })
+      .catch(error => {
+        console.log('error', error);
+        throw error;
+      });
+  }
+
+
+
+
+
+
 /*
  function preisBestimmung(){
   for (var a = 0; a < gebuchteSitzeDaten.length; a++) {
@@ -164,8 +291,8 @@ function datenAusgabe(){
 */
 
  /* Navigation Buchung 3 */
- var button = document.getElementById("testBuchung");
-  button.addEventListener("click", redirectToBuchung3);
+ //var button = document.getElementById("testBuchung");
+ // button.addEventListener("click", redirectToBuchung3);
 /*
  function redirectToBuchung3() {
      // Create a new booking

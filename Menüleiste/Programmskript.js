@@ -4,6 +4,7 @@ var filmTitelVorst;
 var uhrzeit;
 var datum;
 var vorstellungen = [];
+var vorstID;
   function fetchFunctionVorst(i, titel){
     console.log(titel);
   console.log("fetch Vorstellungen beginnt");
@@ -22,7 +23,7 @@ var vorstellungen = [];
      datum = vorstellung.match(/datum=([^']+)/)[1];
 
       //const kinosaal = vorstellung.match(/kinosaal=(\d+)/);
-      const vorstID = vorstellung.match(/sitzplan=(\d+)/);
+     vorstID = vorstellung.match(/sitzplan=(\d+)/);
     };
     createVorstellungen(vorstellungen, i, titel);
     })
@@ -127,7 +128,7 @@ function titelFiltern() {
                             <table class="programmzusammenfassung">
                               <tr>
                                 <td></td>
-                                <td class=" plakate-box"><img id="${i+1}" onclick="filmdetails(event)" src="../img/filmplakat.jpeg" alt="Filmposter" class="poster"></td>
+                                <td class=" plakate-box"><img id="${i+1}" onclick="filmdetails(event)" src="../img/2.jpg" alt="Filmposter" class="poster"></td>
                                 <td >
                                   <table>
                                     <tr class="Info-Anzeige">

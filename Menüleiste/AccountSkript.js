@@ -20,3 +20,5 @@ document.getElementById('registerLink').addEventListener('click', function(event
     // Hier kannst du den Code einfügen, um den Benutzer anzumelden
     console.log('Anmeldung:', username, password);
   });
+
+ 

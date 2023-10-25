@@ -44,7 +44,18 @@ document.addEventListener("DOMContentLoaded", function() {
   .catch(error => console.error('Fehler bei der API-Anfrage:', error));
   console.log(titel);
   
-  
+  var raw = "";
+
+var requestOptions = {
+  method: 'POST',
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/sitzplanAnzeigen?sitzplan=154309957", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
   });
 
 var selectedButtons = [];
@@ -189,3 +200,4 @@ function werteAuslesen(ratioInputs){
   localStorage.setItem('gebuchteSitze', JSON.stringify(gebuchteSitzeDaten));
 
 }
+
