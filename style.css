@@ -452,3 +452,42 @@ border-radius: 5px;
 .inputFeld4 {
   width: 225px;
 }
+.zentrierung123 {
+  margin: 0 auto;
+  text-align: left;
+}
+
+.table-spacing {
+  margin-bottom: 20px; /* Abstand zwischen den Tabellen, nach Bedarf anpassen */
+}
+.table-spacingMore {
+  margin-bottom: 50px; /* Abstand zwischen den Tabellen, nach Bedarf anpassen */
+}
+
+#ueberschrift_message {
+  margin-top: 40px;
+  margin-left: 5cm;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.table-spacingMessage {
+  margin-bottom: 30px;
+}
+
+#results {
+  margin-left: 5cm;
+}
+.PlakatBuchung2 {
+  width: 150px;
+  height: auto;
+}
+.kategoriewahl{
+  padding: 20px;
+  align-content: left;
+}
+.aabstand {
+  padding-left: 520px;
+  width: 300px;
+  padding-bottom: 20px;
+}

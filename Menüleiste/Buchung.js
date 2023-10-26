@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
- function fetchFilme(FilmID, vorstID){
+ function fetchFilme(FilmID, vorstID, titel, genre, fsk,dauer){
   setTimeout(() => {
   fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/filmAnzeigen')
   .then(response => response.text()) // Ändern Sie .json() auf .text(), da die API eine Textantwort sendet
@@ -62,14 +62,41 @@ document.addEventListener("DOMContentLoaded", function() {
          trailerURL = film.match(/trailerURL='([^']+)'/)[1];
          var Titel = document.getElementById("aktuellerTitel");
          console.log("filme fetch");
-         fetchVorst(vorstID);
+         fetchVorst(vorstID, titel, genre, fsk,dauer);
      }
   )
   .catch(error => console.error('Fehler bei der API-Anfrage:', error));
     })
 }
+function datenFüllen(titel, genre, fsk,dauer){
+  console.log("ich kenne diec daten, die ich brauche:"+ titel+genre);
+  document.getElementById("titelBuchung2").innerHTML = titel;
+  document.getElementById("genreBuchung2").innerHTML = genre;
+  document.getElementById("fskBuchung2").innerHTML = fsk;
+  document.getElementById("filmlangeBuchung2").innerHTML = dauer;
+  fetchAndDisplayImage(titel, i);
 
-function fetchVorst(vorstID){
+}
+function fetchAndDisplayImage(titel, i) {
+  const imageElement = document.getElementById("PlakatBuchung2"); // Das vorhandene img-Element
+  const imageUrl = "https://backendfiles.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/files/"+ titel+".jpg";
+
+  fetch(imageUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Fehler beim Abrufen des Bildes');
+      }
+      return response.blob();
+    })
+    .then(blob => {
+      const objectURL = URL.createObjectURL(blob);
+      imageElement.src = objectURL;
+      console.log("Bild gefunden und wird dem film gegen.Für: "+ titel + "iD: "+ i+1);
+
+    })
+    .catch(error => console.error('Fehler:', error));
+}
+function fetchVorst(vorstID, titel, genre, fsk,dauer){
   setTimeout(() => {
   fetch('https://dsssi-backend-lookup.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/vorstellungAnzeigen')
   .then(response => response.text())
@@ -88,7 +115,8 @@ function fetchVorst(vorstID){
    }
    }
    console.log("vorst fetch");
-datenAusgabe();
+datenAusgabe(titel, genre, fsk,dauer);
+
   })
 
   .catch(error => {
@@ -100,7 +128,7 @@ datenAusgabe();
 /* Problem:je nach Film ist der eine oder andere fetch "schneller"-> teil Variablen sind 
 dementsprechen für die datenÜbergabe unbekannt */
 
-function datenAusgabe(){
+function datenAusgabe(titel, genre, fsk,dauer){
   
   for (var i = 0; i < gebuchteSitzeDaten.length; i++) {
     var daten = gebuchteSitzeDaten[i];
@@ -108,24 +136,26 @@ function datenAusgabe(){
     var gewählteTicketsDiv = document.getElementById('gewählteTickets');
     gewählteTicketsDiv.innerHTML += `
     <div>
+    
     <table align="center">
   <tr>
-    <td>Film: </td>
     <td>Tag: </td>
     <td>Uhrzeit: </td>
     <td>Sitzplatz: </td>
     <td>Preis: </td>
   </tr>
   <tr>
-    <td>${titel}</td>
     <td>${datum}</td>
     <td>${uhrzeit}</td>
     <td>${daten.IdSitz}</td>
     <td><div id="einzelpreis${i}"></div></td>
   </tr>
+ 
 </table>
     </div>
     `;
+    datenFüllen(titel, genre, fsk,dauer);
+
     //preisBestimmung();
     var katcode = daten.kategorie.substring(0, 3);
     console.log("die Kategorie eines sitzes ist: " + katcode);
@@ -209,7 +239,7 @@ function sitzArray(){
   }
   const showId = vorstID;
   const customerId = "3";
-
+var amount;
   // Finde den Button anhand seiner ID.
   document.addEventListener('DOMContentLoaded', function() {
     // Dieser Code wird erst ausgeführt, wenn das HTML-Dokument vollständig geladen ist.
@@ -217,7 +247,7 @@ function sitzArray(){
     const generateKeyButton = document.getElementById('generateKeyButton');
     
     generateKeyButton.addEventListener('click', () => {
-      const amount = betraagSummieren(gebuchteSitzeDaten);
+       amount = betraagSummieren(gebuchteSitzeDaten);
       const seats = sitzArray();
 
       parseInt(amount);
@@ -228,10 +258,37 @@ function sitzArray(){
             console.log('Generated keys:', data.key);
             transactionId2 = data.key;
             sendBookingRequest(transactionId2,vorstID, customerId, seats, amount);
+
           }
         });
+
     });
+    
   });
+  function datenladen(){
+    for (var i = 0; i < gebuchteSitzeDaten.length; i++) {
+      var daten = gebuchteSitzeDaten[i];
+      console.log("Die Buchung enthält folgende Daten: "+ titel+ "Am Tag und zur Zeit:"+ datum+ uhrzeit+  ", IdSitz: " + daten.IdSitz + ", kategorie: " + daten.kategorie);
+      var zusammenfass = document.getElementById('gewählteTickets');
+      zusammenfass.innerHTML += `
+      test
+      `;
+      //preisBestimmung();
+      var katcode = daten.kategorie.substring(0, 3);
+      console.log("die Kategorie eines sitzes ist: " + katcode);
+      if (katcode == "erw") {
+        document.getElementById("einzelpreis"+i ).innerHTML = erwachsene + "€";
+        console.log("erwachsenerticketpreis " + erwachsene + " " + i);
+      } else if (katcode == "erm") {
+        document.getElementById("einzelpreis"+i ).innerHTML = ermaßigt  + "€";
+        console.log("ermäßigtticketpreis " + ermaßigt + " " + i);
+      } else if (katcode == "Kin") {
+        document.getElementById("einzelpreis"+i ).innerHTML = kinder + "€";
+        console.log("Kinderticketpreis " + kinder + " " + i);
+      }
+      else console.log("Fehler");
+    }
+  }
   function sendBookingRequest(transaction,showId, customerId, seats, amount) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -255,15 +312,23 @@ function sitzArray(){
       .then(response => response.text())
       .then(result => {
         console.log(result);
+        console.log("buchung gesendet");
+        zusammenfass();
         return result;
+
       })
       .catch(error => {
         console.log('error', error);
         throw error;
       });
+
   }
 
-
+function zusammenfass(){
+  window.location.href = "Buchung3.html?amount="+ amount;
+  
+  
+}
 
 
 

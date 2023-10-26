@@ -89,11 +89,13 @@ function ProgrammErstellung(){
         <tr>
             <td>
                 <div class="card__img">
-                <iframe class="card__img" width="504" height="284" src="${trailerURL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe class="card__img" id="youtubeVideo" width="504" height="284" src="https://www.youtube.com/embed/3QttDZOlYUk?si=V3vNbluUXWBsqwef" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </td>
             <td>
-                <div class="card__avatar"><img class="card__img" src="../img/filmplakat.jpeg"></div>
+            <div id="imgContainer">
+            <img id="${i+1}" onclick="filmdetails(event)" src="" alt="Filmposter" class="poster">
+           </div>
             </td>
         </tr>
     </table>
@@ -127,8 +129,11 @@ function wertZuweisung () {
     DatenFilm.innerHTML = dauer + "min,  FSK: "+ fsk + ", "+ genre ;
     var beschreibungfilm = document.getElementById("BeschreibungFilm");
     beschreibungfilm.innerHTML = beschreibung;
-    //document.getElementById("ytFrame").src.innerHTML = trailerURL;
-}
+    var videoLink = trailerURL; // Ersetzen Sie VIDEO_ID durch die tatsächliche YouTube-Video-ID
+
+    // Ändern Sie die src-Attribut des IFrame-Elements, um das Video anzuzeigen
+    document.getElementById("youtubeVideo").src = videoLink;
+  }
 
 function createVorstellungen(vorstellungen, FilmID){
     console.log(titel + "Vorstellungstitel:"+ filmTitelVorst);
@@ -155,5 +160,25 @@ function createVorstellungen(vorstellungen, FilmID){
   }
   console.log("done");
   z=0;
+  fetchAndDisplayImage(titel, i);
+  }
+  
+  function fetchAndDisplayImage(titel, i) {
+    const imageElement = document.getElementById(i+1); // Das vorhandene img-Element
+    const imageUrl = "https://backendfiles.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/files/"+ titel+".jpg";
+  
+    fetch(imageUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Fehler beim Abrufen des Bildes');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const objectURL = URL.createObjectURL(blob);
+        imageElement.src = objectURL;
+        console.log("Bild gefunden und wird dem film gegen.Für: "+ titel + "iD: "+ i+1);
+      })
+      .catch(error => console.error('Fehler:', error));
   }
   

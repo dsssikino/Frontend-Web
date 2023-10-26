@@ -6,7 +6,7 @@
     <title>Buchung</title>
     <link href="../style.css" rel="stylesheet" />
     <script src="Buchung.js"></script>
-    <script src="Sitzplana.js"></script>
+    <script src="Sitzauswahl.js"></script>
 
 </head>
 <body>
@@ -25,9 +25,12 @@
     </div>
 
     
+<table>
+  <tr>
+    <td width="15%"></td>
+    <td width="20%">
 
-
-<h1 align="center" class="welcome">Buchung Saal 1: <span id="aktuellerTitel"></span > <span id="Vorstellungszeit"></span></h1>
+<h1 align="center" class="welcome">Buchung Saal 2: <span id="aktuellerTitel"></span > <span id="Vorstellungszeit"></span></h1>
 
 <div class="Boxanordnung">
     <div class="box box1">belegt</div>
@@ -43,11 +46,14 @@
 
 <div class="table-spacing"></div>
 <div id="saalplan"></div>
+</td>
 
+<td class="kategoriewahl" width="35%">
 <div class="table-spacing"></div>
 <div align="center">
     Wähle deine Ticketkategorie pro Sitz:
 </div>
+
 <table>
     <tr>
       <td class="Abstand4"></td>
@@ -62,7 +68,10 @@
 
 
 <div class="table-spacing"></div>
-
+</td>
+<td></td>
+</tr>
+</table>
 
 </body>
 </html>

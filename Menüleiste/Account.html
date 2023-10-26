@@ -28,13 +28,13 @@
     <form id="loginForm">
       <input class="inputFeld" type="text" id="username" placeholder="Benutzername" required></br>
       <input class="inputFeld" type="password" id="password" placeholder="Passwort" required></br>
-      <button class="Anmeldung" type="submit">Anmelden</button>
+      <button class="Anmeldung" type="submit" onclick="seitenwechsel()">Anmelden</button>
     </form>
     <p>Noch kein Konto? <a href="Account2.html" id="registerLink">Registrieren</a></p>
     <form id="registerForm" style="display: none;">
       <input type="text" id="newUsername" placeholder="Neuer Benutzername" required>
       <input type="password" id="newPassword" placeholder="Neues Passwort" required>
-      <button type="submit">Registrieren</button>
+      <button type="submit" onclick="generateOutput()">Registrieren</button>
     </form>
   </div>
 

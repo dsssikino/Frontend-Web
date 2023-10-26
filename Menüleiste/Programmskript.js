@@ -71,7 +71,34 @@ function subStringsaal(kino){
   }
   console.log("done");
   z=0;
+  fetchAndDisplayImage(titel, i);
+}
+
+  function fetchAndDisplayImage(titel, i) {
+    const imageElement = document.getElementById(i+1); // Das vorhandene img-Element
+    const imageUrl = "https://backendfiles.greenplant-9a54dc56.germanywestcentral.azurecontainerapps.io/files/"+ titel+".jpg";
+  
+    fetch(imageUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Fehler beim Abrufen des Bildes');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const objectURL = URL.createObjectURL(blob);
+        imageElement.src = objectURL;
+        console.log("Bild gefunden und wird dem film gegen.Für: "+ titel + "iD: "+ i+1);
+      })
+      .catch(error => console.error('Fehler:', error));
   }
+  
+  // Fügen Sie den Event-Handler für den Button hinzu
+  //document.getElementById('fetchImageButton').addEventListener('click', fetchAndDisplayImage);
+  // Fügen Sie den Event-Handler für den Button hinzu
+ // document.getElementById('submitButton').addEventListener('click', fetchAndDisplayImage);
+
+  
 /* Programmfilter, Titel*/
 function titelFiltern() {
   console.log("filtern startet");
@@ -145,7 +172,9 @@ function titelFiltern() {
                             <table class="programmzusammenfassung">
                               <tr>
                                 <td></td>
-                                <td class=" plakate-box"><img id="${i+1}" onclick="filmdetails(event)" src="../img/2.jpg" alt="Filmposter" class="poster"></td>
+                                <td class="class=" plakate-box"><div id="imgContainer">
+                                 <img id="${i+1}" onclick="filmdetails(event)" src="" alt="Filmposter" class="poster">
+                                </div></td>
                                 <td >
                                   <table>
                                     <tr class="Info-Anzeige">
@@ -171,6 +200,7 @@ function titelFiltern() {
                 </div>
                
                         `;
+
                         fetchFunctionVorst(i, titel);
                   }
   })}

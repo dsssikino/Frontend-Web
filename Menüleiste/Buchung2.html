@@ -28,75 +28,41 @@
         <td class="Abstand"></td>
         <td class="Abstand" ></td>
             <td>
-          <img src="../img/filmplakat.jpeg"/>
+          <img id="PlakatBuchung2" class="PlakatBuchung2" src=""/>
           </td>
         <td class="Abstand">
-          <div class="Filmtitel">Barbie</div> <br/>
-          <small><span class="genre"> Genre</span>, <span class="fsk">FSK</span>, <span>Filmlänge</span></small>
+          <div class="Filmtitel" id="titelBuchung2">Barbie</div> <br/>
+          <small>Genre: <span class="genre" id="genreBuchung2"></span>, FSK: <span class="fsk" id="fskBuchung2"></span>, Filmlänge: <span id="filmlangeBuchung2"></span></small>
           
         </td>
         <td class="Abstand"></td>
       </tr>
     </table>
-
+    <table align="center">
+      <tr>
+      <td align="center">Deine Tickets:</td>
+      <td>
     <div id="gewählteTickets">
-      
+    </td>
+    <td></td>
+    </tr>
+  </table>
     </div>
     <div align="center">
-     <h3>Als Gast bestellen:</h3>
+     <h3>Als Gast bestellen: bald möglich</h3>
     </div>
     <div>
       <table>
         <tr>
-          <td class="Abstand"></td>
-          <td class="Abstand5">
-            <table class="zentrierung">
-              <tr>
-                <td>
-                  <label for="vorname">Vorname:</label>
-                  <input class="rightalign" type="text" id="vorname" name="vorname">
-                </td>
-                <td>
-                  <label for="nachname">Nachname:</label>
-                  <input class="rightalign" type="text" id="nachname" name="nachname">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label for="straße">Straße:</label>
-                  <input class="rightalign" type="text" id="straße" name="straße">
-                </td>
-                <td>
-                  <label for="hausnummer">Hausnummer:</label>
-                  <input class="rightalign"type="text" id="hausnummer" name="hausnummer">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label for="postleitzahl">Postleitzahl:</label>
-                  <input class="rightalign" type="text" id="postleitzahl" name="postleitzahl">
-                </td>
-                <td>
-                  <label for="ort">Ort:</label>
-                  <input class="rightalign" type="text" id="ort" name="ort">
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label for="email">E-Mail:</label>
-                  <input class="rightalign" type="text" id="email" name="email">
-                </td>
-                <td>
-                  <label for="geburtsdatum">Geburtsdatum:</label>
-                  <input class="rightalign" type="text" id="geburtsdatum" name="geburtsdatum">
-                </td>
-              </tr>
-              <tr>
-                <td>
+          <td class=""></td>
+          <td class="">          
+
+              <tr >
+                <td class="aabstand">
                   Zahlungsart:
-                  <input type="checkbox" id="rechnung"> <label for="rechnung"> Rechnung</label>
-                  <input type="checkbox" id="paypal"> <label for="paypal"> PayPal</label>
-                  <input type="checkbox" id="vorOrt"> <label for="vorOrt"> vor Ort</label>
+                  <!--<input type="checkbox" id="rechnung"> <label for="rechnung"> Rechnung</label>
+                  <input type="checkbox" id="paypal"> <label for="paypal"> PayPal</label>-->
+                  <input type="checkbox" id="vorOrt" checked disabled> <label for="vorOrt"> vor Ort</label>
                 </td>
               </tr>
             </table>
@@ -105,7 +71,6 @@
         </tr>
       </table>
       <div class="button-container">
-        <button  class="button-zurück" id="zurück" onclick="directtoBuchung()" > zurück</button>
         <button  class="Vorstellungsbutton" id="generateKeyButton"> kostenpflichtig Bestellen</button>
       </div>
     </div>
